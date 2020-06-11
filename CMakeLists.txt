@@ -4,8 +4,13 @@ project (Engine)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
-add_library (engine SHARED Hazel/src/Application.cpp Hazel/src/Log.cpp)
-target_link_libraries(engine ${CONAN_LIBS})
+add_library (engine SHARED 
+                Hazel/src/Application.cpp 
+                Hazel/src/Log.cpp
+                Hazel/src/Platform/Windows/WindowsWindow.cpp
+            )
+find_package (OpenGL REQUIRED)
+target_link_libraries(engine ${CONAN_LIBS_FMT} ${CONAN_LIBS_SPDLOG} ${CONAN_LIBS_GLFW} opengl32)
 if (WIN32)
     target_compile_definitions(engine PRIVATE HZ_PLATFORM_WINDOWS)
     target_compile_definitions(engine PRIVATE HZ_BUILD_DLL)
