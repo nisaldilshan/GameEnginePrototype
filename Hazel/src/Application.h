@@ -2,6 +2,7 @@
 
 #include "Core.h"
 #include "Events/Event.h"
+#include "Events/ApplicationEvent.h"
 #include "Window.h"
 namespace Hazel {
 
@@ -11,6 +12,7 @@ namespace Hazel {
 		Application();
 		virtual ~Application();
 
+		void OnEvent(Event& e);
 		void Run();
 
 	private:
