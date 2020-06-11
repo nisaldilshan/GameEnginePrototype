@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Application.h"
 #include "Events/ApplicationEvent.h"
-#include "Log.h"
+#include <GLFW/glfw3.h>
 
 namespace Hazel {
 
