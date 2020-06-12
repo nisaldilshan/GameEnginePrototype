@@ -4,6 +4,7 @@
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 #include "Window.h"
+#include "LayerStack.h"
 namespace Hazel {
 
 	class HAZEL_API Application
@@ -13,6 +14,8 @@ namespace Hazel {
 		virtual ~Application();
 
 		void OnEvent(Event& e);
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* layer);
 		void Run();
 
 	private:
@@ -20,6 +23,7 @@ namespace Hazel {
 		
 		std::unique_ptr<Window> m_Window;
 		bool m_Running = true;
+		LayerStack m_LayerStack;
 	};
 
 	// To be defined in CLIENT
