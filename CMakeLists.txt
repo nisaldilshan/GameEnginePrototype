@@ -3,8 +3,8 @@ project (Engine)
 
 
 if(NOT CMAKE_BUILD_TYPE)
-    message(STATUS "Setting build type to 'Release' as none was specified.")
-    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build." FORCE)
+    message(STATUS "Setting build type to 'Debug' as none was specified.")
+    set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose the type of build." FORCE)
     # Set the possible values of build type for cmake-gui
     set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 else()
@@ -22,10 +22,11 @@ add_library (engine SHARED
                 Hazel/src/LayerStack.cpp
             )
 find_package (OpenGL REQUIRED)
-target_link_libraries(engine ${CONAN_LIBS_FMT} ${CONAN_LIBS_SPDLOG} ${CONAN_LIBS_GLFW} opengl32)
+target_link_libraries(engine ${CONAN_LIBS_FMT} ${CONAN_LIBS_SPDLOG} ${CONAN_LIBS_GLFW} ${CONAN_LIBS_GLAD} opengl32)
 if (WIN32)
     target_compile_definitions(engine PRIVATE HZ_PLATFORM_WINDOWS)
     target_compile_definitions(engine PRIVATE HZ_BUILD_DLL)
+    target_compile_definitions(engine PRIVATE GLFW_INCLUDE_NONE)#tell glfw to stop include opengl headers
 endif (WIN32)
 target_precompile_headers(engine PRIVATE Hazel/src/pch.h)
 if(CMAKE_BUILD_TYPE MATCHES Debug)
