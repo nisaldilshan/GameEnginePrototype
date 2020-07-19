@@ -18,11 +18,13 @@ add_library (engine SHARED
                 Hazel/src/Application.cpp 
                 Hazel/src/Log.cpp
                 Hazel/src/Platform/Windows/WindowsWindow.cpp
+                Hazel/src/Platform/OpenGL/ImGuiOpenGLRenderer.cpp
                 Hazel/src/Layer.cpp
                 Hazel/src/LayerStack.cpp
+                Hazel/src/ImGui/ImGuiLayer.cpp
             )
 find_package (OpenGL REQUIRED)
-target_link_libraries(engine ${CONAN_LIBS_FMT} ${CONAN_LIBS_SPDLOG} ${CONAN_LIBS_GLFW} ${CONAN_LIBS_GLAD} opengl32)
+target_link_libraries(engine ${CONAN_LIBS_FMT} ${CONAN_LIBS_SPDLOG} ${CONAN_LIBS_GLFW} ${CONAN_LIBS_GLAD} ${CONAN_LIBS_IMGUI} opengl32)
 if (WIN32)
     target_compile_definitions(engine PRIVATE HZ_PLATFORM_WINDOWS)
     target_compile_definitions(engine PRIVATE HZ_BUILD_DLL)
