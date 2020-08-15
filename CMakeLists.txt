@@ -14,6 +14,11 @@ endif()
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CXX_EXTENSIONS OFF)
+
+#### ENGINE ###
 add_library (engine SHARED 
                 Hazel/src/Application.cpp 
                 Hazel/src/Log.cpp
@@ -34,8 +39,14 @@ target_precompile_headers(engine PRIVATE Hazel/src/pch.h)
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     set_property(TARGET engine PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreadedDebugDLL")
     message("-- MSVC_RUNTIME_LIBRARY = MultiThreadedDebugDLL")
+    target_compile_definitions(engine PRIVATE HZ_DEBUG)
+else()
+    set_property(TARGET engine PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreadedDLL")
+    message("-- MSVC_RUNTIME_LIBRARY = MultiThreadedDLL")
+    target_compile_definitions(engine PRIVATE HZ_RELEASE)
 endif()
 
+#### SANDBOX APP ###
 add_executable (sandbox Sandbox/src/SandboxApp.cpp)
 target_include_directories(sandbox PUBLIC Hazel)
 target_link_libraries(sandbox engine)
