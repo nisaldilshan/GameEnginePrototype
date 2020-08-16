@@ -17,4 +17,10 @@ namespace Hazel {
 		s_ClientLogger->set_level(spdlog::level::trace);
 	}
 
+	void Log::Destroy()
+	{
+		s_CoreLogger.reset();
+		s_ClientLogger.reset();
+	}
+
 }
