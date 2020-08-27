@@ -27,7 +27,7 @@ jobs:
       run: mkdir build &&
           cd build &&
           pip install conan &&
-          conan install .. -s build_type=$BUILD_TYPE
+          conan install .. -s build_type=$BUILD_TYPE --build=missing
 
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
