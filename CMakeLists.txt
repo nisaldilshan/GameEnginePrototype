@@ -11,6 +11,7 @@ else()
     message("-- CMAKE_BUILD_TYPE=" "${CMAKE_BUILD_TYPE}")
 endif()
 
+message(STATUS "CMake Binary Dir " + ${CMAKE_BINARY_DIR})
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
