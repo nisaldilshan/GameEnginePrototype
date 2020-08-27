@@ -25,8 +25,7 @@ jobs:
     - name: Conan Install
       # Some projects don't allow in-source building, so create a separate build directory
       # We'll use this as our working directory for all subsequent commands
-      run: cd build
-      run: conan install .. -s build_type=$BUILD_TYPE
+      run: cd build && conan install .. -s build_type=$BUILD_TYPE
 
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
