@@ -27,6 +27,8 @@ jobs:
       run: mkdir build &&
           cd build &&
           pip install conan &&
+          conan remote add nisaldilshan https://api.bintray.com/conan/nisaldilshan/misc &&
+          conan user -p 1e2bd8df7f29fdd7722c48468200cb2274036f52 -r nisaldilshan nisaldilshan &&
           conan install .. -s build_type=$BUILD_TYPE --build=missing
 
     - name: Configure CMake
