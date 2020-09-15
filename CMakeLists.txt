@@ -1,6 +1,18 @@
 cmake_minimum_required (VERSION 3.16.0)
-project (Engine)
+set(CMAKE_CXX_STANDARD 17)
+message(STATUS "CMAKE_CXX_STANDARD " + ${CMAKE_CXX_STANDARD})
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+message(STATUS "CMAKE_CXX_STANDARD_REQUIRED " + ${CMAKE_CXX_STANDARD_REQUIRED})
+set(CXX_EXTENSIONS OFF)
+message(STATUS "CXX_EXTENSIONS " + ${CXX_EXTENSIONS})
 
+project (GameEngine)
+
+message(STATUS "CMAKE_SYSTEM_NAME " + ${CMAKE_SYSTEM_NAME})
+message(STATUS "CMAKE_HOST_SYSTEM_NAME " + ${CMAKE_HOST_SYSTEM_NAME})
+set(CMAKE_SYSTEM_VERSION latest)
+message(STATUS "CMAKE_SYSTEM_VERSION " + ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION})
+message(STATUS "CMAKE_SYSTEM_VERSION " + ${CMAKE_SYSTEM_VERSION})
 
 if(NOT CMAKE_BUILD_TYPE)
     message(STATUS "Setting build type to 'Debug' as none was specified.")
@@ -15,12 +27,8 @@ message(STATUS "CMake Binary Dir " + ${CMAKE_BINARY_DIR})
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CXX_EXTENSIONS OFF)
-
 #### ENGINE ###
-add_library (engine SHARED 
+add_library (engine STATIC  
                 Hazel/src/Application.cpp 
                 Hazel/src/Log.cpp
                 Hazel/src/Platform/Windows/WindowsWindow.cpp
@@ -28,10 +36,10 @@ add_library (engine SHARED
                 Hazel/src/LayerStack.cpp
                 Hazel/src/ImGui/ImGuiLayer.cpp
                 Hazel/src/Platform/Windows/WindowsInput.cpp
-                #Hazel/src/ImGui/ImGuiBuild.cpp
+                Hazel/src/ImGui/ImGuiBuild.cpp
             )
 find_package (OpenGL REQUIRED)
-target_link_libraries(engine ${CONAN_LIBS_FMT} ${CONAN_LIBS_SPDLOG} ${CONAN_LIBS_GLFW} ${CONAN_LIBS_GLAD} ${CONAN_LIBS_IMGUI} ${CONAN_LIBS_GLM} opengl32)
+target_link_libraries(engine PRIVATE ${CONAN_LIBS_FMT} ${CONAN_LIBS_SPDLOG} ${CONAN_LIBS_GLFW} ${CONAN_LIBS_GLAD} ${CONAN_LIBS_IMGUI} ${CONAN_LIBS_GLM} opengl32)
 if (WIN32)
     target_compile_definitions(engine PRIVATE HZ_PLATFORM_WINDOWS)
     target_compile_definitions(engine PRIVATE HZ_BUILD_DLL)
@@ -39,19 +47,27 @@ if (WIN32)
 endif (WIN32)
 target_precompile_headers(engine PRIVATE Hazel/src/pch.h)
 if(CMAKE_BUILD_TYPE MATCHES Debug)
-    set_property(TARGET engine PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreadedDebugDLL")
-    message("-- MSVC_RUNTIME_LIBRARY = MultiThreadedDebugDLL")
+    #set_property(TARGET engine PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreadedDebug")
+    #message("-- MSVC_RUNTIME_LIBRARY - engine = MultiThreadedDebug")
     target_compile_definitions(engine PRIVATE HZ_DEBUG)
 else()
-    set_property(TARGET engine PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreadedDLL")
-    message("-- MSVC_RUNTIME_LIBRARY = MultiThreadedDLL")
+    #set_property(TARGET engine PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded")
+    #message("-- MSVC_RUNTIME_LIBRARY - engine = MultiThreaded")
     target_compile_definitions(engine PRIVATE HZ_RELEASE)
 endif()
 
 #### SANDBOX APP ###
 add_executable (sandbox Sandbox/src/SandboxApp.cpp)
-target_include_directories(sandbox PUBLIC Hazel)
-target_link_libraries(sandbox engine)
+target_include_directories(sandbox PRIVATE Hazel)
 if (WIN32)
     target_compile_definitions(sandbox PRIVATE HZ_PLATFORM_WINDOWS)
 endif (WIN32)
+# if(CMAKE_BUILD_TYPE MATCHES Debug)
+#     set_property(TARGET sandbox PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreadedDebug")
+#     message("-- MSVC_RUNTIME_LIBRARY - sandbox = MultiThreadedDebug")
+# else()
+#     set_property(TARGET sandbox PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded")
+#     message("-- MSVC_RUNTIME_LIBRARY - sandbox = MultiThreaded")
+# endif()
+
+target_link_libraries(sandbox PRIVATE engine)
