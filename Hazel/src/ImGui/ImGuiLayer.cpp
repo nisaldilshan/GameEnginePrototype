@@ -2,8 +2,8 @@
 #include "ImGuiLayer.h"
 
 #include <imgui.h>
-#include <../../../source/source_subfolder/examples/imgui_impl_opengl3.h>
-#include <../../../source/source_subfolder/examples/imgui_impl_glfw.h> 
+#include <../misc/bindings/imgui_impl_opengl3.h>
+#include <../misc/bindings/imgui_impl_glfw.h> 
 
 #include "../Application.h"
 
