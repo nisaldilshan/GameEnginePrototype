@@ -38,6 +38,7 @@ add_library (engine STATIC
                 Hazel/src/Platform/Windows/WindowsInput.cpp
                 Hazel/src/ImGui/ImGuiBuild.cpp
                 Hazel/src/Platform/OpenGL/OpenGLContext.cpp
+                Hazel/src/Renderer/Shader.cpp
             )
 find_package (OpenGL REQUIRED)
 target_include_directories(engine PRIVATE Hazel)
