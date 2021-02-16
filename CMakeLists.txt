@@ -39,6 +39,10 @@ add_library (engine STATIC
                 Hazel/src/ImGui/ImGuiBuild.cpp
                 Hazel/src/Platform/OpenGL/OpenGLContext.cpp
                 Hazel/src/Renderer/Shader.cpp
+                Hazel/src/Renderer/Renderer.cpp
+                Hazel/src/Renderer/Buffer.cpp
+                Hazel/src/Platform/OpenGL/OpenGLContext.cpp
+                Hazel/src/Platform/OpenGL/OpenGLBuffer.cpp
             )
 find_package (OpenGL REQUIRED)
 target_include_directories(engine PRIVATE Hazel)
