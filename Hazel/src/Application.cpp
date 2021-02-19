@@ -21,20 +21,35 @@ namespace Hazel {
 
 		m_VertexArray.reset(VertexArray::Create());
 
-		float vertices[3 * 7] = {
-			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
+		float triangleVertexPositions[3 * 3] = {
+			-0.5f, -0.5f, 0.0f, 
+			 0.5f, -0.5f, 0.0f, 
+			 0.0f,  0.5f, 0.0f 
+		};
+		float triangleVertexColors[3 * 4] = {
+			0.8f, 0.2f, 0.8f, 1.0f,
+			0.2f, 0.3f, 0.8f, 1.0f,
+			0.8f, 0.8f, 0.2f, 1.0f
 		};
 
-		std::shared_ptr<VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
-		BufferLayout layout = {
-			{ ShaderDataType::Float3, "a_Position" },
-			{ ShaderDataType::Float4, "a_Color" }
-		};
-		vertexBuffer->SetLayout(layout);
-		m_VertexArray->AddVertexBuffer(vertexBuffer);
+		{
+			std::shared_ptr<VertexBuffer> vertexBuffer;
+			vertexBuffer.reset(VertexBuffer::Create(triangleVertexPositions, sizeof(triangleVertexPositions)));
+			BufferLayout layout = {
+				{ ShaderDataType::Float3, "a_Position" }
+			};
+			vertexBuffer->SetLayout(layout);
+			m_VertexArray->AddVertexBuffer(vertexBuffer);
+		}
+		{
+			std::shared_ptr<VertexBuffer> vertexBuffer;
+			vertexBuffer.reset(VertexBuffer::Create(triangleVertexColors, sizeof(triangleVertexColors)));
+			BufferLayout layout = {
+				{ ShaderDataType::Float4, "a_Color" }
+			};
+			vertexBuffer->SetLayout(layout);
+			m_VertexArray->AddVertexBuffer(vertexBuffer);
+		}
 
 		uint32_t indices[3] = { 0, 1, 2 };
 		std::shared_ptr<IndexBuffer> indexBuffer;
