@@ -14,7 +14,7 @@ namespace Hazel {
 	{
 	public:
 		Application();
-		virtual ~Application();
+		virtual ~Application() = default;
 
 		void OnEvent(Event& e);
 		void PushLayer(Layer* layer);
