@@ -42,9 +42,13 @@ add_library (engine STATIC
                 Hazel/src/Renderer/Renderer.cpp
                 Hazel/src/Renderer/Buffer.cpp
                 Hazel/src/Renderer/VertexArray.cpp
+                Hazel/src/Renderer/Renderer.cpp
+                Hazel/src/Renderer/RenderCommand.cpp
+                Hazel/src/Renderer/RendererAPI.cpp
                 Hazel/src/Platform/OpenGL/OpenGLContext.cpp
                 Hazel/src/Platform/OpenGL/OpenGLBuffer.cpp
                 Hazel/src/Platform/OpenGL/OpenGLVertexArray.cpp
+                Hazel/src/Platform/OpenGL/OpenGLRendererAPI.cpp
             )
 find_package (OpenGL REQUIRED)
 target_include_directories(engine PRIVATE Hazel)
