@@ -56,6 +56,28 @@ namespace Hazel {
 		indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
+		m_SquareVA.reset(VertexArray::Create());
+
+		float squareVertices[4 * 7] = {
+			-0.55f, -0.65f, 0.0f, 0.8f, 0.2f, 0.2f, 1.0f,
+			 0.55f, -0.65f, 0.0f, 0.2f, 0.8f, 0.2f, 1.0f,
+			 0.55f,  0.65f, 0.0f, 0.2f, 0.2f, 0.8f, 1.0f,
+			-0.55f,  0.65f, 0.0f, 0.2f, 0.8f, 0.8f, 1.0f
+		};
+
+		std::shared_ptr<VertexBuffer> squareVB;
+		squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		squareVB->SetLayout({
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float4, "a_Color" }
+		});
+		m_SquareVA->AddVertexBuffer(squareVB);
+
+		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
+		std::shared_ptr<IndexBuffer> squareIB;
+		squareIB.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		m_SquareVA->SetIndexBuffer(squareIB);
+
 		std::string vertexSrc = R"(
 			#version 330 core
 			
@@ -120,6 +142,10 @@ namespace Hazel {
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			m_Shader->Bind();
+
+			m_SquareVA->Bind();
+			glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+
 			m_VertexArray->Bind();
 			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
