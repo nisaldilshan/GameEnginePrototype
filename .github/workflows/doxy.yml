@@ -28,3 +28,9 @@ jobs:
         with:
           working-directory: '.'
           doxyfile-path: './Doxyfile'
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: doxygen-report
+          path: html
