@@ -45,6 +45,7 @@ add_library (engine STATIC
                 Hazel/src/Renderer/Renderer.cpp
                 Hazel/src/Renderer/RenderCommand.cpp
                 Hazel/src/Renderer/RendererAPI.cpp
+                Hazel/src/Renderer/OrthographicCamera.cpp
                 Hazel/src/Platform/OpenGL/OpenGLContext.cpp
                 Hazel/src/Platform/OpenGL/OpenGLBuffer.cpp
                 Hazel/src/Platform/OpenGL/OpenGLVertexArray.cpp

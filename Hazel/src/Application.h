@@ -7,6 +7,7 @@
 #include "src/Renderer/Shader.h"
 #include "src/Renderer/Buffer.h"
 #include "src/Renderer/VertexArray.h"
+#include "src/Renderer/OrthographicCamera.h"
 #include "Window.h"
 #include "LayerStack.h"
 namespace Hazel {
@@ -38,6 +39,8 @@ namespace Hazel {
 
 		std::shared_ptr<VertexArray> m_VertexArray;
 		std::shared_ptr<VertexArray> m_SquareVA;
+
+		OrthographicCamera m_Camera;
 
 		static Application* s_Instance;
 	};
