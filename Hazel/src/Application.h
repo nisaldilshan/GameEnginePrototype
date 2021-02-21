@@ -4,15 +4,12 @@
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 #include "ImGui/ImGuiLayer.h"
-#include "src/Renderer/Shader.h"
-#include "src/Renderer/Buffer.h"
-#include "src/Renderer/VertexArray.h"
-#include "src/Renderer/OrthographicCamera.h"
+
 #include "Window.h"
 #include "LayerStack.h"
 namespace Hazel {
 
-	class HAZEL_API Application
+	class Application
 	{
 	public:
 		Application();
