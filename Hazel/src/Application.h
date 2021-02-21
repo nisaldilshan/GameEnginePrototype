@@ -3,6 +3,7 @@
 #include "Core.h"
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
+#include "Core/Timestep.h"
 #include "ImGui/ImGuiLayer.h"
 
 #include "Window.h"
@@ -31,6 +32,7 @@ namespace Hazel {
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+		float m_LastFrameTime = 0.0f;
 
 		static Application* s_Instance;
 	};
