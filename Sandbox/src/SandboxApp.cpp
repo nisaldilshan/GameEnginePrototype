@@ -1,6 +1,9 @@
 #include <Hazel.h>
+#include "src/Platform/OpenGL/OpenGLShader.h"
+
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class ExampleLayer : public Hazel::Layer
 {
@@ -101,7 +104,7 @@ public:
 			}
 		)";
 
-		m_Shader.reset(new Hazel::Shader(vertexSrc, fragmentSrc));
+		m_Shader.reset(Hazel::Shader::Create(vertexSrc, fragmentSrc));
 	}
 
 	void OnUpdate(Hazel::Timestep ts) override

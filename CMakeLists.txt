@@ -50,6 +50,7 @@ add_library (engine STATIC
                 Hazel/src/Platform/OpenGL/OpenGLBuffer.cpp
                 Hazel/src/Platform/OpenGL/OpenGLVertexArray.cpp
                 Hazel/src/Platform/OpenGL/OpenGLRendererAPI.cpp
+                Hazel/src/Platform/OpenGL/OpenGLShader.cpp
             )
 find_package (OpenGL REQUIRED)
 target_include_directories(engine PRIVATE Hazel)
