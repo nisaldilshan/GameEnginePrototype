@@ -31,13 +31,11 @@ conan_basic_setup()
 add_library (engine STATIC  
                 Hazel/src/Application.cpp 
                 Hazel/src/Log.cpp
-                Hazel/src/Platform/Windows/WindowsWindow.cpp
                 Hazel/src/Layer.cpp
                 Hazel/src/LayerStack.cpp
                 Hazel/src/ImGui/ImGuiLayer.cpp
-                Hazel/src/Platform/Windows/WindowsInput.cpp
                 Hazel/src/ImGui/ImGuiBuild.cpp
-                Hazel/src/Platform/OpenGL/OpenGLContext.cpp
+                Hazel/src/StbImage/stb_image.cpp
                 Hazel/src/Renderer/Shader.cpp
                 Hazel/src/Renderer/Renderer.cpp
                 Hazel/src/Renderer/Buffer.cpp
@@ -46,11 +44,16 @@ add_library (engine STATIC
                 Hazel/src/Renderer/RenderCommand.cpp
                 Hazel/src/Renderer/RendererAPI.cpp
                 Hazel/src/Renderer/OrthographicCamera.cpp
+                Hazel/src/Renderer/Texture.cpp
+                Hazel/src/Platform/Windows/WindowsWindow.cpp
+                Hazel/src/Platform/Windows/WindowsInput.cpp
+                Hazel/src/Platform/OpenGL/OpenGLContext.cpp
                 Hazel/src/Platform/OpenGL/OpenGLContext.cpp
                 Hazel/src/Platform/OpenGL/OpenGLBuffer.cpp
                 Hazel/src/Platform/OpenGL/OpenGLVertexArray.cpp
                 Hazel/src/Platform/OpenGL/OpenGLRendererAPI.cpp
                 Hazel/src/Platform/OpenGL/OpenGLShader.cpp
+                Hazel/src/Platform/OpenGL/OpenGLTexture.cpp
             )
 find_package (OpenGL REQUIRED)
 target_include_directories(engine PRIVATE Hazel)
