@@ -33,6 +33,7 @@ add_library (engine STATIC
                 Hazel/src/Log.cpp
                 Hazel/src/Layer.cpp
                 Hazel/src/LayerStack.cpp
+                Hazel/src/OrthographicCameraController.cpp
                 Hazel/src/ImGui/ImGuiLayer.cpp
                 Hazel/src/ImGui/ImGuiBuild.cpp
                 Hazel/src/StbImage/stb_image.cpp

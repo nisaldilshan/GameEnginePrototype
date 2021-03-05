@@ -11,6 +11,7 @@
 #include "src/Input.h"
 #include "src/KeyCodes.h"
 #include "src/MouseButtonCodes.h"
+#include "src/OrthographicCameraController.h"
 
 #include "src/ImGui/ImGuiLayer.h"
 
