@@ -1,6 +1,6 @@
-#include "../../pch.h"
+#include "pch.h"
 #include "WindowsInput.h"
-#include "../../Application.h"
+#include "src/Core/Application.h"
 #include <GLFW/glfw3.h>
 
 namespace Hazel {

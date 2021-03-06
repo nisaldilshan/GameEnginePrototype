@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Application.h"
-#include "Events/ApplicationEvent.h"
-#include "Renderer/Renderer.h"
+#include "src/Events/ApplicationEvent.h"
+#include "src/Renderer/Renderer.h"
 #include "Input.h"
 
 #include <glfw/glfw3.h>

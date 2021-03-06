@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Core.h"
-#include "Events/Event.h"
-#include "Events/ApplicationEvent.h"
-#include "Core/Timestep.h"
-#include "ImGui/ImGuiLayer.h"
+#include "src/Events/Event.h"
+#include "src/Events/ApplicationEvent.h"
+#include "src/Core/Timestep.h"
+#include "src/ImGui/ImGuiLayer.h"
 
 #include "Window.h"
 #include "LayerStack.h"

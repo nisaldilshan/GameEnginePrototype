@@ -1,8 +1,8 @@
-#include "src/pch.h"
+#include "pch.h"
 #include "OrthographicCameraController.h"
 
-#include "src/Input.h"
-#include "src/KeyCodes.h"
+#include "src/Core/Input.h"
+#include "src/Core/KeyCodes.h"
 
 namespace Hazel {
 

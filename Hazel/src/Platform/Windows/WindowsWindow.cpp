@@ -1,9 +1,9 @@
-#include "../../pch.h"
+#include "pch.h"
 #include "WindowsWindow.h"
 
-#include "../../Events/ApplicationEvent.h"
-#include "../../Events/MouseEvent.h"
-#include "../../Events/KeyEvent.h"
+#include "src/Events/ApplicationEvent.h"
+#include "src/Events/MouseEvent.h"
+#include "src/Events/KeyEvent.h"
 
 #include "src/Platform/OpenGL/OpenGLContext.h"
 namespace Hazel {

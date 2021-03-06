@@ -1,4 +1,4 @@
-#include "src/pch.h"
+#include "pch.h"
 #include "Texture.h"
 
 #include "Renderer.h"

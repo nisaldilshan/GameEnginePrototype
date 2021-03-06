@@ -29,11 +29,10 @@ conan_basic_setup()
 
 #### ENGINE ###
 add_library (engine STATIC  
-                Hazel/src/Application.cpp 
-                Hazel/src/Log.cpp
-                Hazel/src/Layer.cpp
-                Hazel/src/LayerStack.cpp
-                Hazel/src/OrthographicCameraController.cpp
+                Hazel/src/Core/Application.cpp 
+                Hazel/src/Core/Log.cpp
+                Hazel/src/Core/Layer.cpp
+                Hazel/src/Core/LayerStack.cpp
                 Hazel/src/ImGui/ImGuiLayer.cpp
                 Hazel/src/ImGui/ImGuiBuild.cpp
                 Hazel/src/StbImage/stb_image.cpp
@@ -45,6 +44,7 @@ add_library (engine STATIC
                 Hazel/src/Renderer/RenderCommand.cpp
                 Hazel/src/Renderer/RendererAPI.cpp
                 Hazel/src/Renderer/OrthographicCamera.cpp
+                Hazel/src/Renderer/OrthographicCameraController.cpp
                 Hazel/src/Renderer/Texture.cpp
                 Hazel/src/Platform/Windows/WindowsWindow.cpp
                 Hazel/src/Platform/Windows/WindowsInput.cpp
@@ -64,7 +64,7 @@ if (WIN32)
     target_compile_definitions(engine PRIVATE HZ_BUILD_DLL)
     target_compile_definitions(engine PRIVATE GLFW_INCLUDE_NONE)#tell glfw to stop include opengl headers
 endif (WIN32)
-target_precompile_headers(engine PRIVATE Hazel/src/pch.h)
+target_precompile_headers(engine PRIVATE Hazel/pch.h)
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     #set_property(TARGET engine PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreadedDebug")
     #message("-- MSVC_RUNTIME_LIBRARY - engine = MultiThreadedDebug")
