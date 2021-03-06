@@ -76,7 +76,10 @@ else()
 endif()
 
 #### SANDBOX APP ###
-add_executable (sandbox Sandbox/src/SandboxApp.cpp)
+add_executable (sandbox 
+                    Sandbox/src/SandboxApp.cpp
+                    Sandbox/src/Sandbox2D.cpp
+                )
 target_include_directories(sandbox PRIVATE Hazel)
 if (WIN32)
     target_compile_definitions(sandbox PRIVATE HZ_PLATFORM_WINDOWS)
