@@ -25,7 +25,7 @@ namespace Hazel {
 			glm::mat4 ViewProjectionMatrix;
 		};
 
-		static SceneData* s_SceneData;
+		static std::unique_ptr<SceneData> s_SceneData;
 	};
 
 
