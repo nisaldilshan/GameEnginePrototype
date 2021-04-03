@@ -11,11 +11,13 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::OnAttach()
 {
+	HZ_PROFILE_FUNCTION();
 	m_CheckerboardTexture = Hazel::Texture2D::Create("C:/Users/Nisal Dilshan/Desktop/Cpp/GameEnginePrototype/Sandbox/assets/textures/Checkerboard.png");
 }
 
 void Sandbox2D::OnDetach()
 {
+	HZ_PROFILE_FUNCTION();
 }
 
 void Sandbox2D::OnUpdate(Hazel::Timestep ts)
@@ -47,6 +49,7 @@ void Sandbox2D::OnUpdate(Hazel::Timestep ts)
 
 void Sandbox2D::OnImGuiRender()
 {
+	HZ_PROFILE_FUNCTION();
 	ImGui::Begin("Settings");
 	ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
 
