@@ -10,7 +10,7 @@
 
 #include "src/Core/Input.h"
 #include "src/Core/KeyCodes.h"
-#include "src/Core/MouseButtonCodes.h"
+#include "src/Core/MouseCodes.h"
 #include "src/Renderer/OrthographicCameraController.h"
 
 #include "src/ImGui/ImGuiLayer.h"
