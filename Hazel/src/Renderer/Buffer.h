@@ -111,9 +111,13 @@ namespace Hazel {
 		virtual const BufferLayout& GetLayout() const = 0;
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 
-		static VertexBuffer* Create(float* vertices, uint32_t size);
+		virtual void SetData(const void* data, uint32_t size) = 0;
+
+		static std::shared_ptr<VertexBuffer> Create(uint32_t size); // used in batch renderer, can set vertex data later using "SetData()"
+		static VertexBuffer* Create(float* vertices, uint32_t size); // used when we have a predermined set of vertices which are not going to change during runtime, EG: quad_vertices 
 	};
 
+	// Currently supports 32-bit index buffers only
 	class IndexBuffer
 	{
 	public:
@@ -124,7 +128,7 @@ namespace Hazel {
 
 		virtual uint32_t GetCount() const = 0;
 
-		static IndexBuffer* Create(uint32_t* indices, uint32_t size);
+		static std::shared_ptr<IndexBuffer> Create(uint32_t* indices, uint32_t count);
 	};
 
 } 

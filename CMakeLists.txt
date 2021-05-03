@@ -27,6 +27,9 @@ message(STATUS "CMake Binary Dir " + ${CMAKE_BINARY_DIR})
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
+add_compile_definitions(BATCHING_ENABLED)
+
+
 #### ENGINE ###
 add_library (engine STATIC  
                 Hazel/src/Core/Application.cpp 

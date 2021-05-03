@@ -7,11 +7,13 @@ namespace Hazel {
 	class OpenGLVertexBuffer : public VertexBuffer
 	{
 	public:
+		OpenGLVertexBuffer(uint32_t size); //used in batch renderer, set data later using SetData()
 		OpenGLVertexBuffer(float* vertices, uint32_t size);
 		virtual ~OpenGLVertexBuffer();
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
+		virtual void SetData(const void* data, uint32_t size) override;
 
 		virtual const BufferLayout& GetLayout() const override { return m_Layout; }
 		virtual void SetLayout(const BufferLayout& layout) override { m_Layout = layout; }
@@ -29,7 +31,7 @@ namespace Hazel {
 		virtual void Bind() const;
 		virtual void Unbind() const;
 
-		virtual uint32_t GetCount() const { return m_Count; }
+		virtual uint32_t GetCount() const;
 	private:
 		uint32_t m_RendererID;
 		uint32_t m_Count;
