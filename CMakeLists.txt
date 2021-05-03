@@ -29,7 +29,6 @@ conan_basic_setup()
 
 add_compile_definitions(BATCHING_ENABLED)
 
-
 #### ENGINE ###
 add_library (engine STATIC  
                 Hazel/src/Core/Application.cpp 
