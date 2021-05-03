@@ -35,3 +35,6 @@ build/
 .vscode/
 html/
 latex/
+HazelProfile-Runtime.json
+HazelProfile-Shutdown.json
+HazelProfile-Startup.json
