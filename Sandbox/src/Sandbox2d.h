@@ -21,6 +21,7 @@ private:
 	std::shared_ptr<Hazel::VertexArray> m_SquareVA;
 	std::shared_ptr<Hazel::Shader> m_FlatColorShader;
 	std::shared_ptr<Hazel::Texture2D> m_CheckerboardTexture;
+	std::shared_ptr<Hazel::Texture2D> m_logoTexture;
 
 	struct ProfileResult
 	{
