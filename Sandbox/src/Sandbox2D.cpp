@@ -32,6 +32,7 @@ void Sandbox2D::OnUpdate(Hazel::Timestep ts)
 	}
 
 	// Render
+	Hazel::Renderer2D::ResetStats();
 	{
 		HZ_PROFILE_SCOPE("Renderer Prep");
 		Hazel::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
@@ -47,24 +48,34 @@ void Sandbox2D::OnUpdate(Hazel::Timestep ts)
 		Hazel::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, m_CheckerboardTexture, 10.0f);
 		Hazel::Renderer2D::DrawRotatedQuad({ 1.0f, 1.0f, 0.2}, { 0.6f, 0.6f }, glm::radians(-60.0f), m_logoTexture);
 		Hazel::Renderer2D::EndScene();
+
+		Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
+		for (float y = -5.0f; y < 5.0f; y += 0.5f)
+		{
+			for (float x = -5.0f; x < 5.0f; x += 0.5f)
+			{
+				glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
+				Hazel::Renderer2D::DrawQuad({ x, y }, { 0.45f, 0.45f }, color);
+			}
+		}
+		Hazel::Renderer2D::EndScene();
 	}
 }
 
 void Sandbox2D::OnImGuiRender()
 {
 	HZ_PROFILE_FUNCTION();
+
 	ImGui::Begin("Settings");
+
+	auto stats = Hazel::Renderer2D::GetStats();
+	ImGui::Text("Renderer2D Stats:");
+	ImGui::Text("Draw Calls: %d", stats.DrawCalls);
+	ImGui::Text("Quads: %d", stats.QuadCount);
+	ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
+	ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+
 	ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
-
-	for (auto& result : m_ProfileResults)
-	{
-		char label[50];
-		strcpy(label, "%.3fms ");
-		strcat(label, result.Name);
-		ImGui::Text(label, result.Time);
-	}
-	m_ProfileResults.clear();
-
 	ImGui::End();
 }
 
