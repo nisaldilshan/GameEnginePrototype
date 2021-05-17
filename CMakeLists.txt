@@ -80,8 +80,9 @@ endif()
 
 #### SANDBOX APP ###
 add_executable (sandbox 
+                    Sandbox/src/ParticleSystem.cpp
                     Sandbox/src/SandboxApp.cpp
-                    Sandbox/src/Sandbox2D.cpp
+                    Sandbox/src/Sandbox2D.cpp           
                 )
 target_include_directories(sandbox PRIVATE Hazel)
 if (WIN32)
