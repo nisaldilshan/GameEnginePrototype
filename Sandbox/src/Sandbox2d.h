@@ -25,6 +25,8 @@ private:
 	std::shared_ptr<Hazel::Texture2D> m_CheckerboardTexture;
 	std::shared_ptr<Hazel::Texture2D> m_logoTexture;
 
+	std::shared_ptr<Hazel::Texture2D> m_SpriteSheet;
+
 	struct ProfileResult
 	{
 		const char* Name;
