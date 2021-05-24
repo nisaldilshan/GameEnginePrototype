@@ -49,6 +49,7 @@ add_library (engine STATIC
                 Hazel/src/Renderer/OrthographicCamera.cpp
                 Hazel/src/Renderer/OrthographicCameraController.cpp
                 Hazel/src/Renderer/Texture.cpp
+                Hazel/src/Renderer/SubTexture2D.cpp
                 Hazel/src/Platform/Windows/WindowsWindow.cpp
                 Hazel/src/Platform/Windows/WindowsInput.cpp
                 Hazel/src/Platform/OpenGL/OpenGLContext.cpp
