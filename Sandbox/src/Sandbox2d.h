@@ -26,6 +26,7 @@ private:
 	std::shared_ptr<Hazel::Texture2D> m_logoTexture;
 
 	std::shared_ptr<Hazel::Texture2D> m_SpriteSheet;
+	std::shared_ptr<Hazel::SubTexture2D> m_TextureStairs;
 
 	struct ProfileResult
 	{
