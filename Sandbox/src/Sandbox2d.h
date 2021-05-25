@@ -24,9 +24,8 @@ private:
 	std::shared_ptr<Hazel::Shader> m_FlatColorShader;
 	std::shared_ptr<Hazel::Texture2D> m_CheckerboardTexture;
 	std::shared_ptr<Hazel::Texture2D> m_logoTexture;
-
 	std::shared_ptr<Hazel::Texture2D> m_SpriteSheet;
-	std::shared_ptr<Hazel::SubTexture2D> m_TextureStairs;
+
 
 	struct ProfileResult
 	{
@@ -40,4 +39,7 @@ private:
 
 	ParticleSystem m_ParticleSystem;
 	ParticleProps m_Particle;
+
+	uint32_t m_MapWidth, m_MapHeight;
+	std::unordered_map<char, std::shared_ptr<Hazel::SubTexture2D>> m_TextureMap;
 }; 
