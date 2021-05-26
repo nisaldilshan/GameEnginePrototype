@@ -33,10 +33,10 @@ namespace Hazel {
 		std::string Name;
 		ShaderDataType Type;
 		uint32_t Size;
-		uint32_t Offset;
+		size_t Offset;
 		bool Normalized;
 
-		BufferElement() {}
+		BufferElement() = default;
 
 		BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
 			: Name(name), Type(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
@@ -51,8 +51,8 @@ namespace Hazel {
 				case ShaderDataType::Float2:  return 2;
 				case ShaderDataType::Float3:  return 3;
 				case ShaderDataType::Float4:  return 4;
-				case ShaderDataType::Mat3:    return 3 * 3;
-				case ShaderDataType::Mat4:    return 4 * 4;
+				case ShaderDataType::Mat3:    return 3; // 3* float3
+				case ShaderDataType::Mat4:    return 4; // 4* float4
 				case ShaderDataType::Int:     return 1;
 				case ShaderDataType::Int2:    return 2;
 				case ShaderDataType::Int3:    return 3;
@@ -70,14 +70,14 @@ namespace Hazel {
 	public:
 		BufferLayout() {}
 
-		BufferLayout(const std::initializer_list<BufferElement>& elements)
+		BufferLayout(std::initializer_list<BufferElement> elements)
 			: m_Elements(elements)
 		{
 			CalculateOffsetsAndStride();
 		}
 
-		inline uint32_t GetStride() const { return m_Stride; }
-		inline const std::vector<BufferElement>& GetElements() const { return m_Elements; }
+		uint32_t GetStride() const { return m_Stride; }
+		const std::vector<BufferElement>& GetElements() const { return m_Elements; }
 
 		std::vector<BufferElement>::iterator begin() { return m_Elements.begin(); }
 		std::vector<BufferElement>::iterator end() { return m_Elements.end(); }
@@ -86,7 +86,7 @@ namespace Hazel {
 	private:
 		void CalculateOffsetsAndStride()
 		{
-			uint32_t offset = 0;
+			size_t offset = 0;
 			m_Stride = 0;
 			for (auto& element : m_Elements)
 			{
@@ -103,25 +103,25 @@ namespace Hazel {
 	class VertexBuffer
 	{
 	public:
-		virtual ~VertexBuffer() {}
+		virtual ~VertexBuffer() = default;
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
+		virtual void SetData(const void* data, uint32_t size) = 0;
+
 		virtual const BufferLayout& GetLayout() const = 0;
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 
-		virtual void SetData(const void* data, uint32_t size) = 0;
-
-		static std::shared_ptr<VertexBuffer> Create(uint32_t size); // used in batch renderer, can set vertex data later using "SetData()"
-		static VertexBuffer* Create(float* vertices, uint32_t size); // used when we have a predermined set of vertices which are not going to change during runtime, EG: quad_vertices 
+		static std::shared_ptr<VertexBuffer> Create(uint32_t size);
+		static std::shared_ptr<VertexBuffer> Create(float* vertices, uint32_t size);
 	};
 
-	// Currently supports 32-bit index buffers only
+	// Currently Hazel only supports 32-bit index buffers
 	class IndexBuffer
 	{
 	public:
-		virtual ~IndexBuffer() {}
+		virtual ~IndexBuffer() = default;
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
@@ -131,4 +131,4 @@ namespace Hazel {
 		static std::shared_ptr<IndexBuffer> Create(uint32_t* indices, uint32_t count);
 	};
 
-} 
+}
