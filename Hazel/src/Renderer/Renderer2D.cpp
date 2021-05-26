@@ -123,6 +123,8 @@ namespace Hazel {
 		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
 
 		s_Data.TextureSlotIndex = 1;
+
+		delete[] s_Data.QuadVertexBufferBase;
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
@@ -229,8 +231,6 @@ namespace Hazel {
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
 			FlushAndReset();
 
-
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
 
@@ -298,8 +298,6 @@ namespace Hazel {
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
 			FlushAndReset();
 
-
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 		constexpr size_t quadVertexCount = 4;
 		const glm::vec2* textureCoords = subtexture->GetTexCoords();
 		const std::shared_ptr<Texture2D> texture = subtexture->GetTexture();
@@ -420,7 +418,6 @@ namespace Hazel {
 
 		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 #ifndef BATCHING_ENABLED
 		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
@@ -490,7 +487,6 @@ namespace Hazel {
 			FlushAndReset();
 
 		constexpr size_t quadVertexCount = 4;
-		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 		const glm::vec2* textureCoords = subtexture->GetTexCoords();
 		const std::shared_ptr<Texture2D> texture = subtexture->GetTexture();
 
@@ -514,7 +510,7 @@ namespace Hazel {
 		{
 			if (s_Data.TextureSlotIndex >= Renderer2DData::MaxTextureSlots)
 				FlushAndReset();
-				
+
 			textureIndex = (float)s_Data.TextureSlotIndex;
 			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
 			s_Data.TextureSlotIndex++;
