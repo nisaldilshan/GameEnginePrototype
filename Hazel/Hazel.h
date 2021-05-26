@@ -1,11 +1,12 @@
 #pragma once
 
 // For use by Hazel applications
+#include "src/Core/Base.h"
+#include "src/Core/Log.h"
+#include "src/Core/Assert.h"
 
 #include "src/Core/Application.h"
-#include "src/Core/Log.h"
 #include "src/Core/Layer.h"
-
 #include "src/Core/Timestep.h"
 
 #include "src/Core/Input.h"
