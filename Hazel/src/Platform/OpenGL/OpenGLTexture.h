@@ -22,12 +22,12 @@ namespace Hazel {
 
 		virtual bool operator==(const Texture& other) const override
 		{
-			return m_RendererID == ((OpenGLTexture2D&)other).m_RendererID;
+			return m_TextureID == ((OpenGLTexture2D&)other).m_TextureID;
 		}
 	private:
 		std::string m_Path;
 		uint32_t m_Width, m_Height;
-		uint32_t m_RendererID;
+		uint32_t m_TextureID;
 		GLenum m_InternalFormat, m_DataFormat;
 	};
 
