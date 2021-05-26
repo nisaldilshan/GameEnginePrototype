@@ -23,9 +23,9 @@ static const char* s_MapTiles =
 "WWWWWWWWWWWWWWWWWWWWWWWW";
 
 Sandbox2D::Sandbox2D()
-	: Layer("Sandbox2D"), m_CameraController(1280.0f / 720.0f, true)
-{
-}
+	: Layer("Sandbox2D")
+	, m_CameraController(1280.0f / 720.0f, true)
+{}
 
 void Sandbox2D::OnAttach()
 {
@@ -76,27 +76,27 @@ void Sandbox2D::OnUpdate(Hazel::Timestep ts)
 		Hazel::RenderCommand::Clear();
 	}
 
-	// {
-	// 	HZ_PROFILE_SCOPE("Renderer Draw");
-	// 	Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
-	// 	Hazel::Renderer2D::DrawRotatedQuad({ -1.0f, 0.0f }, { 0.9f, 0.8f }, glm::radians(-45.0f), { 0.8f, 0.2f, 0.3f, 1.0f });
-	// 	Hazel::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
-	// 	Hazel::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
-	// 	Hazel::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, m_CheckerboardTexture, 10.0f);
-	// 	Hazel::Renderer2D::DrawRotatedQuad({ 1.0f, 1.0f, 0.2}, { 0.6f, 0.6f }, glm::radians(-60.0f), m_logoTexture);
-	// 	Hazel::Renderer2D::EndScene();
+	{
+		HZ_PROFILE_SCOPE("Renderer Draw");
+		Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
+		Hazel::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
+		Hazel::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, m_SquareColor);
+		Hazel::Renderer2D::DrawRotatedQuad({ -1.0f, 0.0f }, { 0.9f, 0.8f }, glm::radians(-45.0f), { 0.8f, 0.2f, 0.3f, 1.0f });
+		Hazel::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, m_CheckerboardTexture, 10.0f);
+		Hazel::Renderer2D::DrawRotatedQuad({ 1.0f, 1.0f, 0.2}, { 0.6f, 0.6f }, glm::radians(-60.0f), m_logoTexture);
+		Hazel::Renderer2D::EndScene();
 
-	// 	Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
-	// 	for (float y = -5.0f; y < 5.0f; y += 0.5f)
-	// 	{
-	// 		for (float x = -5.0f; x < 5.0f; x += 0.5f)
-	// 		{
-	// 			glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
-	// 			Hazel::Renderer2D::DrawQuad({ x, y }, { 0.45f, 0.45f }, color);
-	// 		}
-	// 	}
-	// 	Hazel::Renderer2D::EndScene();
-	// }
+		Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
+		for (float y = -5.0f; y < 5.0f; y += 0.5f)
+		{
+			for (float x = -5.0f; x < 5.0f; x += 0.5f)
+			{
+				glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
+				Hazel::Renderer2D::DrawQuad({ x, y }, { 0.45f, 0.45f }, color);
+			}
+		}
+		Hazel::Renderer2D::EndScene();
+	}
 
 	{
 		if (Hazel::Input::IsMouseButtonPressed(HZ_MOUSE_BUTTON_LEFT))
@@ -118,27 +118,24 @@ void Sandbox2D::OnUpdate(Hazel::Timestep ts)
 		m_ParticleSystem.OnRender(m_CameraController.GetCamera());
 	}
 
-	{
-		Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
+	// {
+	// 	Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
 
-		for (uint32_t y = 0; y < m_MapHeight; y++)
-		{
-			for (uint32_t x = 0; x < m_MapWidth; x++)
-			{
-				char tileType = s_MapTiles[x + ( y * m_MapWidth)];
-				if(m_TextureMap.find(tileType) != m_TextureMap.end())
-				{
-					Hazel::Renderer2D::DrawQuad({ x - (m_MapWidth/2.0f), (m_MapHeight/2.0f) - y, 0.5f }, { 1.0f, 1.0f }, m_TextureMap[tileType]);
-				}
-			}
+	// 	for (uint32_t y = 0; y < m_MapHeight; y++)
+	// 	{
+	// 		for (uint32_t x = 0; x < m_MapWidth; x++)
+	// 		{
+	// 			char tileType = s_MapTiles[x + ( y * m_MapWidth)];
+	// 			if(m_TextureMap.find(tileType) != m_TextureMap.end())
+	// 			{
+	// 				Hazel::Renderer2D::DrawQuad({ x - (m_MapWidth/2.0f), (m_MapHeight/2.0f) - y, 0.5f }, { 1.0f, 1.0f }, m_TextureMap[tileType]);
+	// 			}
+	// 		}
 			
-		}
+	// 	}
 		
-
-		
-		
-		Hazel::Renderer2D::EndScene();
-	}
+	// 	Hazel::Renderer2D::EndScene();
+	// }
 }
 
 void Sandbox2D::OnImGuiRender()
