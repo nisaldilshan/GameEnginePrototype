@@ -29,7 +29,7 @@ namespace Hazel {
 	{
 		HZ_PROFILE_FUNCTION();
 
-		//Renderer::Shutdown();
+		Renderer::Shutdown();
 	}
 
 	void Application::PushLayer(Layer* layer)
@@ -46,18 +46,23 @@ namespace Hazel {
 		layer->OnAttach();
 	}
 
+	void Application::Close()
+	{
+		m_Running = false;
+	}
+
 	void Application::OnEvent(Event& e)
 	{
 		HZ_PROFILE_FUNCTION();
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
+		dispatcher.Dispatch<WindowCloseEvent>(HZ_BIND_EVENT_FN(Application::OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(HZ_BIND_EVENT_FN(Application::OnWindowResize));
 
-		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin(); )
+		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
 		{
-			(*--it)->OnEvent(e);
-			if (e.Handled)
+			if (e.Handled) 
 				break;
+			(*it)->OnEvent(e);
 		}
 	}
 
@@ -68,7 +73,7 @@ namespace Hazel {
 		{
 			HZ_PROFILE_SCOPE("RunLoop");
 			float time = (float)glfwGetTime();
-			Hazel::Timestep timestep = time - m_LastFrameTime;
+			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
 			if (!m_Minimized)
@@ -87,7 +92,7 @@ namespace Hazel {
 				}
 				m_ImGuiLayer->End();
 			}
-			
+
 			m_Window->OnUpdate();
 		}
 	}
