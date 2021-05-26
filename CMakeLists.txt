@@ -30,7 +30,7 @@ conan_basic_setup()
 add_compile_definitions(BATCHING_ENABLED)
 
 #### ENGINE ###
-add_library (engine STATIC  
+add_library (engine
                 Hazel/src/Core/Application.cpp 
                 Hazel/src/Core/Log.cpp
                 Hazel/src/Core/Layer.cpp
@@ -64,9 +64,8 @@ find_package (OpenGL REQUIRED)
 target_include_directories(engine PRIVATE Hazel)
 target_link_libraries(engine PRIVATE ${CONAN_LIBS_FMT} ${CONAN_LIBS_SPDLOG} ${CONAN_LIBS_GLFW} ${CONAN_LIBS_GLAD} ${CONAN_LIBS_IMGUI} ${CONAN_LIBS_GLM} opengl32)
 if (WIN32)
-    target_compile_definitions(engine PRIVATE HZ_PLATFORM_WINDOWS)
     target_compile_definitions(engine PRIVATE HZ_BUILD_DLL)
-    target_compile_definitions(engine PRIVATE GLFW_INCLUDE_NONE)#tell glfw to stop include opengl headers
+    target_compile_definitions(engine PRIVATE GLFW_INCLUDE_NONE) #tell glfw to stop include opengl headers
 endif (WIN32)
 target_precompile_headers(engine PRIVATE Hazel/pch.h)
 if(CMAKE_BUILD_TYPE MATCHES Debug)
@@ -86,15 +85,8 @@ add_executable (sandbox
                     Sandbox/src/Sandbox2D.cpp           
                 )
 target_include_directories(sandbox PRIVATE Hazel)
-if (WIN32)
-    target_compile_definitions(sandbox PRIVATE HZ_PLATFORM_WINDOWS)
-endif (WIN32)
-# if(CMAKE_BUILD_TYPE MATCHES Debug)
-#     set_property(TARGET sandbox PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreadedDebug")
-#     message("-- MSVC_RUNTIME_LIBRARY - sandbox = MultiThreadedDebug")
-# else()
-#     set_property(TARGET sandbox PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded")
-#     message("-- MSVC_RUNTIME_LIBRARY - sandbox = MultiThreaded")
-# endif()
+
+#set_property(TARGET sandbox PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+#message("-- MSVC_RUNTIME_LIBRARY - sandbox = MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 target_link_libraries(sandbox PRIVATE engine)

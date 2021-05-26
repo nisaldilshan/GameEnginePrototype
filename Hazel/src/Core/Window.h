@@ -1,8 +1,8 @@
 #pragma once
 
-#include "pch.h"
+#include <pch.h>
 
-#include "Core.h"
+#include "Base.h"
 #include "src/Events/Event.h"
 
 namespace Hazel {

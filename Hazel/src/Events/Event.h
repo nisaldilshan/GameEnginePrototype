@@ -1,7 +1,7 @@
 #pragma once
 
-#include "pch.h"
-#include "src/Core/Core.h"
+#include <pch.h>
+#include <src/Core/Base.h>
 namespace Hazel {
 
 	// Events in Hazel are currently blocking, meaning when an event occurs it
