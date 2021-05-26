@@ -28,8 +28,7 @@ public:
 		};
 
 		{
-			std::shared_ptr<Hazel::VertexBuffer> vertexBuffer;
-			vertexBuffer.reset(Hazel::VertexBuffer::Create(triangleVertexPositions, sizeof(triangleVertexPositions)));
+			std::shared_ptr<Hazel::VertexBuffer> vertexBuffer = Hazel::VertexBuffer::Create(triangleVertexPositions, sizeof(triangleVertexPositions));
 			Hazel::BufferLayout layout = {
 				{ Hazel::ShaderDataType::Float3, "a_Position" }
 			};
@@ -37,8 +36,7 @@ public:
 			m_VertexArray->AddVertexBuffer(vertexBuffer);
 		}
 		{
-			std::shared_ptr<Hazel::VertexBuffer> vertexBuffer;
-			vertexBuffer.reset(Hazel::VertexBuffer::Create(triangleVertexColors, sizeof(triangleVertexColors)));
+			std::shared_ptr<Hazel::VertexBuffer> vertexBuffer = Hazel::VertexBuffer::Create(triangleVertexColors, sizeof(triangleVertexColors));
 			Hazel::BufferLayout layout = {
 				{ Hazel::ShaderDataType::Float4, "a_Color" }
 			};
@@ -60,8 +58,7 @@ public:
 			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
-		std::shared_ptr<Hazel::VertexBuffer> squareVB;
-		squareVB.reset(Hazel::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		std::shared_ptr<Hazel::VertexBuffer> squareVB = Hazel::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 		squareVB->SetLayout({
 			{ Hazel::ShaderDataType::Float3, "a_Position" },
 			{ Hazel::ShaderDataType::Float2, "a_TexCoord" }
