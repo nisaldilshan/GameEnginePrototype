@@ -50,6 +50,7 @@ add_library (engine
                 Hazel/src/Renderer/OrthographicCameraController.cpp
                 Hazel/src/Renderer/Texture.cpp
                 Hazel/src/Renderer/SubTexture2D.cpp
+                Hazel/src/Renderer/FrameBuffer.cpp
                 Hazel/src/Platform/Windows/WindowsWindow.cpp
                 Hazel/src/Platform/Windows/WindowsInput.cpp
                 Hazel/src/Platform/OpenGL/OpenGLContext.cpp
@@ -59,6 +60,7 @@ add_library (engine
                 Hazel/src/Platform/OpenGL/OpenGLRendererAPI.cpp
                 Hazel/src/Platform/OpenGL/OpenGLShader.cpp
                 Hazel/src/Platform/OpenGL/OpenGLTexture.cpp
+                Hazel/src/Platform/OpenGL/OpenGLFramebuffer.cpp
             )
 find_package (OpenGL REQUIRED)
 target_include_directories(engine PRIVATE Hazel)
