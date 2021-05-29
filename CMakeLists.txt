@@ -80,7 +80,9 @@ else()
     target_compile_definitions(engine PRIVATE HZ_RELEASE)
 endif()
 
-#### SANDBOX APP ###
+################################
+########## SANDBOX APP #########
+################################
 add_executable (sandbox 
                     Sandbox/src/ParticleSystem.cpp
                     Sandbox/src/SandboxApp.cpp
@@ -92,3 +94,19 @@ target_include_directories(sandbox PRIVATE Hazel)
 #message("-- MSVC_RUNTIME_LIBRARY - sandbox = MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 target_link_libraries(sandbox PRIVATE engine)
+
+
+################################
+############ EDITOR ############
+################################
+
+add_executable (editor 
+                    Editor/src/EditorApp.cpp
+                    Editor/src/EditorLayer.cpp           
+                )
+target_include_directories(editor PRIVATE Hazel)
+
+#set_property(TARGET sandbox PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+#message("-- MSVC_RUNTIME_LIBRARY - sandbox = MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
+target_link_libraries(editor PRIVATE engine)
