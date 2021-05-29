@@ -22,6 +22,9 @@ private:
 	// Temp
 	std::shared_ptr<Hazel::VertexArray> m_SquareVA;
 	std::shared_ptr<Hazel::Shader> m_FlatColorShader;
+
+	std::shared_ptr<Hazel::Framebuffer> m_Framebuffer;
+
 	std::shared_ptr<Hazel::Texture2D> m_CheckerboardTexture;
 	std::shared_ptr<Hazel::Texture2D> m_logoTexture;
 	std::shared_ptr<Hazel::Texture2D> m_SpriteSheet;
