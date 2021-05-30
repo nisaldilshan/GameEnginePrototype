@@ -33,6 +33,8 @@ add_compile_definitions(BATCHING_ENABLED)
 add_library (engine
                 Hazel/src/Core/Application.cpp 
                 Hazel/src/Core/Log.cpp
+                Hazel/src/Core/Window.cpp
+                Hazel/src/Core/Input.cpp
                 Hazel/src/Core/Layer.cpp
                 Hazel/src/Core/LayerStack.cpp
                 Hazel/src/ImGui/ImGuiLayer.cpp
@@ -46,6 +48,7 @@ add_library (engine
                 Hazel/src/Renderer/Renderer2D.cpp
                 Hazel/src/Renderer/RenderCommand.cpp
                 Hazel/src/Renderer/RendererAPI.cpp
+                Hazel/src/Renderer/GraphicsContext.cpp
                 Hazel/src/Renderer/OrthographicCamera.cpp
                 Hazel/src/Renderer/OrthographicCameraController.cpp
                 Hazel/src/Renderer/Texture.cpp
