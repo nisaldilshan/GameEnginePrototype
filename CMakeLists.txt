@@ -34,7 +34,6 @@ add_library (engine
                 Hazel/src/Core/Application.cpp 
                 Hazel/src/Core/Log.cpp
                 Hazel/src/Core/Window.cpp
-                Hazel/src/Core/Input.cpp
                 Hazel/src/Core/Layer.cpp
                 Hazel/src/Core/LayerStack.cpp
                 Hazel/src/ImGui/ImGuiLayer.cpp
