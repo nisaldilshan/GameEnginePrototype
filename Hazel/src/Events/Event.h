@@ -2,6 +2,7 @@
 
 #include <pch.h>
 #include <src/Core/Base.h>
+
 namespace Hazel {
 
 	// Events in Hazel are currently blocking, meaning when an event occurs it
@@ -34,38 +35,39 @@ namespace Hazel {
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
-	class  Event
+	class Event
 	{
 	public:
+		virtual ~Event() = default;
+
+		bool Handled = false;
+
 		virtual EventType GetEventType() const = 0;
 		virtual const char* GetName() const = 0;
 		virtual int GetCategoryFlags() const = 0;
 		virtual std::string ToString() const { return GetName(); }
 
-		inline bool IsInCategory(EventCategory category)
+		bool IsInCategory(EventCategory category)
 		{
 			return GetCategoryFlags() & category;
 		}
-
-		bool Handled  = false;
 	};
 
 	class EventDispatcher
 	{
-		template<typename T>
-		using EventFn = std::function<bool(T&)>;
 	public:
 		EventDispatcher(Event& event)
 			: m_Event(event)
 		{
 		}
-
-		template<typename T>
-		bool Dispatch(EventFn<T> func)
+		
+		// F will be deduced by the compiler
+		template<typename T, typename F>
+		bool Dispatch(const F& func)
 		{
 			if (m_Event.GetEventType() == T::GetStaticType())
 			{
-				m_Event.Handled = func((T&)m_Event);
+				m_Event.Handled = func(static_cast<T&>(m_Event));
 				return true;
 			}
 			return false;

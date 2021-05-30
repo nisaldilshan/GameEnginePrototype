@@ -1,6 +1,5 @@
 #include <Hazel.h>
 #include <src/Core/EntryPoint.h>
-#include "src/Platform/OpenGL/OpenGLShader.h"
 
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
