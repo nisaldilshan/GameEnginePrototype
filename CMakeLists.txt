@@ -53,6 +53,7 @@ add_library (engine
                 Hazel/src/Renderer/Texture.cpp
                 Hazel/src/Renderer/SubTexture2D.cpp
                 Hazel/src/Renderer/FrameBuffer.cpp
+                Hazel/src/Scene/Scene.cpp
                 Hazel/src/Platform/Windows/WindowsWindow.cpp
                 Hazel/src/Platform/Windows/WindowsInput.cpp
                 Hazel/src/Platform/OpenGL/OpenGLContext.cpp
@@ -66,7 +67,7 @@ add_library (engine
             )
 find_package (OpenGL REQUIRED)
 target_include_directories(engine PRIVATE Hazel)
-target_link_libraries(engine PRIVATE ${CONAN_LIBS_FMT} ${CONAN_LIBS_SPDLOG} ${CONAN_LIBS_GLFW} ${CONAN_LIBS_GLAD} ${CONAN_LIBS_IMGUI} ${CONAN_LIBS_GLM} opengl32)
+target_link_libraries(engine PRIVATE ${CONAN_LIBS})
 if (WIN32)
     #target_compile_definitions(engine PRIVATE HZ_BUILD_DLL)
     target_compile_definitions(engine PRIVATE GLFW_INCLUDE_NONE) #tell glfw to stop include opengl headers
