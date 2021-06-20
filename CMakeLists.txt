@@ -113,3 +113,19 @@ target_include_directories(editor PRIVATE Hazel)
 #message("-- MSVC_RUNTIME_LIBRARY - sandbox = MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 target_link_libraries(editor PRIVATE engine)
+
+
+################################
+############ EDITOR-ECS ############
+################################
+
+add_executable (editor-ecs 
+                    Editor/src/EditorApp.cpp
+                    Editor/src/EditorLayerECS.cpp           
+                )
+target_include_directories(editor-ecs PRIVATE Hazel)
+
+#set_property(TARGET sandbox PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+#message("-- MSVC_RUNTIME_LIBRARY - sandbox = MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
+target_link_libraries(editor-ecs PRIVATE engine)
