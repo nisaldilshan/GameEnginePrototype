@@ -54,6 +54,7 @@ add_library (engine
                 Hazel/src/Renderer/SubTexture2D.cpp
                 Hazel/src/Renderer/FrameBuffer.cpp
                 Hazel/src/Scene/Scene.cpp
+                Hazel/src/Scene/Entity.cpp
                 Hazel/src/Platform/Windows/WindowsWindow.cpp
                 Hazel/src/Platform/Windows/WindowsInput.cpp
                 Hazel/src/Platform/OpenGL/OpenGLContext.cpp
