@@ -28,6 +28,7 @@ jobs:
           cd build &&
           pip install conan &&
           conan remote add jfrog https://nisaldissanayake.jfrog.io/artifactory/api/conan/test-repo-conan &&
+          export CONAN_REVISIONS_ENABLED=1 &&
           conan user -p APDKEBtYix6oGR53Lit8hcMHk4 -r jfrog bcnisal@gmail.com &&
           conan install .. -s build_type=$BUILD_TYPE --build=missing
 
