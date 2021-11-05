@@ -27,8 +27,8 @@ jobs:
       run: mkdir build &&
           cd build &&
           pip install conan &&
-          conan remote add jfrog https://nisald.jfrog.io/artifactory/api/conan/nisald-conan &&
-          conan user -p HYf+A4VdxX!r62# -r jfrog bcnisal@gmail.com &&
+          conan remote add jfrog https://nisaldissanayake.jfrog.io/artifactory/api/conan/test-repo-conan &&
+          conan user -p APDKEBtYix6oGR53Lit8hcMHk4 -r jfrog bcnisal@gmail.com &&
           conan install .. -s build_type=$BUILD_TYPE --build=missing
 
     - name: Configure CMake
