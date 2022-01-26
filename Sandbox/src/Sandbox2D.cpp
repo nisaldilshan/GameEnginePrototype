@@ -1,4 +1,4 @@
-#include "Sandbox2D.h"
+#include "Sandbox2d.h"
 #include <imgui.h>
 
 #include <glm/gtc/matrix_transform.hpp>

@@ -1,9 +1,9 @@
 #include "pch.h"
-#include "Framebuffer.h"
+#include "FrameBuffer.h"
 
 #include "src/Renderer/Renderer.h"
 
-#include "src/Platform/OpenGL/OpenGLFramebuffer.h"
+#include "src/Platform/OpenGL/OpenGLFrameBuffer.h"
 
 namespace Hazel {
 
