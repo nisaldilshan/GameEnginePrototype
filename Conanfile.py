@@ -2,7 +2,7 @@ from conans import ConanFile, CMake
 
 class OpenGLTest(ConanFile):
    settings = "os", "compiler", "build_type", "arch"
-   requires = "spdlog/1.6.1", "glfw/3.2.1@bincrafters/stable", "glad/0.1.33", "imgui/latest@nisaldilshan/docking", "glm/0.9.9.8", "stb/20190512@conan/stable", "entt/3.7.1"
+   requires = "spdlog/1.6.1", "glfw/3.3.2", "glad/0.1.33", "glm/0.9.9.8", "stb/20200203", "entt/3.7.1", "imgui/latest@nisaldilshan/docking"
    generators = "cmake"
    build_policy = "missing"
    default_options = {

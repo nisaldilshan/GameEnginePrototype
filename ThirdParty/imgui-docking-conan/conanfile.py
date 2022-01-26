@@ -21,32 +21,18 @@ class IMGUIConan(ConanFile):
     default_options = {"shared": False, "fPIC": True}
     _source_subfolder = "source_subfolder"
 
-    def config_options(self):
-        if self.settings.os == 'Windows':
-            del self.options.fPIC
-
     def source(self):
-        #tools.get("{0}/archive/v{1}.tar.gz".format(self.homepage, self.version))
-        #extracted_dir = self.name + "-" + self.version
-        #os.rename(extracted_dir, self._source_subfolder)
         git = tools.Git(folder=self._source_subfolder)
         git.clone("https://github.com/ocornut/imgui.git", "docking")
 
-    def _configure_cmake(self):
-        cmake = CMake(self)
-        cmake.configure()
-        return cmake
-
-    def build(self):
-        cmake = self._configure_cmake()
-        cmake.build()
 
     def package(self):
         self.copy(pattern="LICENSE.txt", dst="licenses", src=self._source_subfolder)
-        self.copy(pattern="examples/imgui_impl_*", dst="misc/bindings", src=self._source_subfolder, keep_path=False)
-        cmake = self._configure_cmake()
-        cmake.install()
+        self.copy(pattern="backends/imgui_impl_*", dst="include", src=self._source_subfolder, keep_path=False)
+        self.copy(pattern="imconfig.h", dst="include", src=self._source_subfolder, keep_path=False)
+        self.copy(pattern="imgui.h", dst="include", src=self._source_subfolder, keep_path=False)
+        self.copy(pattern="imgui.cpp", dst="include", src=self._source_subfolder, keep_path=False)
+        self.copy(pattern="imgui_*", dst="include", src=self._source_subfolder, keep_path=False)
+        self.copy(pattern="imgui_*", dst="include", src=self._source_subfolder, keep_path=False)
+        self.copy(pattern="imstb_*", dst="include", src=self._source_subfolder, keep_path=False)
 
-    def package_info(self):
-        self.cpp_info.srcdirs = ["misc", ]
-        self.cpp_info.libs = tools.collect_libs(self)

@@ -64,7 +64,7 @@ add_library (engine
                 Hazel/src/Platform/OpenGL/OpenGLRendererAPI.cpp
                 Hazel/src/Platform/OpenGL/OpenGLShader.cpp
                 Hazel/src/Platform/OpenGL/OpenGLTexture.cpp
-                Hazel/src/Platform/OpenGL/OpenGLFramebuffer.cpp
+                Hazel/src/Platform/OpenGL/OpenGLFrameBuffer.cpp
             )
 find_package (OpenGL REQUIRED)
 target_include_directories(engine PRIVATE Hazel)
