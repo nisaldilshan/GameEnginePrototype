@@ -57,6 +57,7 @@ add_library (engine
                 Hazel/src/Scene/Entity.cpp
                 Hazel/src/Platform/Windows/WindowsWindow.cpp
                 Hazel/src/Platform/Windows/WindowsInput.cpp
+                Hazel/src/Platform/Linux/LinuxWindow.cpp
                 Hazel/src/Platform/OpenGL/OpenGLContext.cpp
                 Hazel/src/Platform/OpenGL/OpenGLContext.cpp
                 Hazel/src/Platform/OpenGL/OpenGLBuffer.cpp
