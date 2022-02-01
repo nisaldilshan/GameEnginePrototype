@@ -31,9 +31,9 @@ void Sandbox2D::OnAttach()
 {
 	HZ_PROFILE_FUNCTION();
 
-	m_CheckerboardTexture = Hazel::Texture2D::Create("C:/Users/Nisal Dilshan/Desktop/Cpp/GameEnginePrototype/Sandbox/assets/textures/Checkerboard.png");
-	m_logoTexture = Hazel::Texture2D::Create("C:/Users/Nisal Dilshan/Desktop/Cpp/GameEnginePrototype/Sandbox/assets/textures/ChernoLogo.png");
-	m_SpriteSheet = Hazel::Texture2D::Create("C:/Users/Nisal Dilshan/Desktop/Cpp/GameEnginePrototype/Sandbox/assets/game/textures/RPGpack_sheet_2X.png");
+	m_CheckerboardTexture = Hazel::Texture2D::Create("assets/textures/Checkerboard.png");
+	m_logoTexture = Hazel::Texture2D::Create("assets/textures/ChernoLogo.png");
+	m_SpriteSheet = Hazel::Texture2D::Create("assets/game/textures/RPGpack_sheet_2X.png");
 
 	m_MapWidth = s_MapWidth;
 	m_MapHeight = strlen(s_MapTiles) / m_MapWidth;

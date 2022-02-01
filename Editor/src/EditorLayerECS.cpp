@@ -28,8 +28,8 @@ namespace Hazel {
 
 		m_SquareEntity = square;
 
-		m_CheckerboardTexture = Hazel::Texture2D::Create("C:/Users/Nisal Dilshan/Desktop/Cpp/GameEnginePrototype/Sandbox/assets/textures/Checkerboard.png");
-		m_logoTexture = Hazel::Texture2D::Create("C:/Users/Nisal Dilshan/Desktop/Cpp/GameEnginePrototype/Sandbox/assets/textures/ChernoLogo.png");
+		m_CheckerboardTexture = Hazel::Texture2D::Create("assets/textures/Checkerboard.png");
+		m_logoTexture = Hazel::Texture2D::Create("assets/textures/ChernoLogo.png");
 
 	}
 
