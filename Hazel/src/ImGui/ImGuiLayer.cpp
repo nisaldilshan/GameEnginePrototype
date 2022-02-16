@@ -8,8 +8,8 @@
 #include "src/Core/Application.h"
 
 // TEMPORARY
-#include <GLFW/glfw3.h>
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 namespace Hazel {
 
@@ -32,8 +32,8 @@ namespace Hazel {
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
 
-		io.Fonts->AddFontFromFileTTF("C:/Users/Nisal Dilshan/Desktop/Cpp/GameEnginePrototype/Sandbox/assets/fonts/OpenSans-Bold.ttf", 18.0f);
-		io.FontDefault = io.Fonts->AddFontFromFileTTF("C:/Users/Nisal Dilshan/Desktop/Cpp/GameEnginePrototype/Sandbox/assets/fonts/OpenSans-Regular.ttf", 18.0f);
+		io.Fonts->AddFontFromFileTTF("assets/fonts/OpenSans-Bold.ttf", 18.0f);
+		io.FontDefault = io.Fonts->AddFontFromFileTTF("assets/fonts/OpenSans-Regular.ttf", 18.0f);
 
 		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();
