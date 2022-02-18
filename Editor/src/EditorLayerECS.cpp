@@ -1,4 +1,4 @@
-#include "EditorLayer.h"
+#include "EditorLayerECS.h"
 #include <imgui.h>
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -27,10 +27,6 @@ namespace Hazel {
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
 
 		m_SquareEntity = square;
-
-		m_CheckerboardTexture = Hazel::Texture2D::Create("assets/textures/Checkerboard.png");
-		m_logoTexture = Hazel::Texture2D::Create("assets/textures/ChernoLogo.png");
-
 	}
 
 	void EditorLayer::OnDetach()
@@ -127,7 +123,6 @@ namespace Hazel {
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 		}
-
 		if (ImGui::BeginMenuBar())
 		{
 			if (ImGui::BeginMenu("File"))

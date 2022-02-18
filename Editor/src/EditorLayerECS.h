@@ -24,8 +24,8 @@ namespace Hazel {
 		std::shared_ptr<Shader> m_FlatColorShader;
 		std::shared_ptr<Framebuffer> m_Framebuffer;
 
-		std::shared_ptr<Texture2D> m_CheckerboardTexture;
-		std::shared_ptr<Texture2D> m_logoTexture;
+		std::shared_ptr<Scene> m_ActiveScene;
+		Entity m_SquareEntity;
 
 		struct ProfileResult
 		{
@@ -38,6 +38,5 @@ namespace Hazel {
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
 
-		glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 	}; 
 }

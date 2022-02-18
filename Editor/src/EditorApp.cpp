@@ -5,7 +5,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#ifdef EDITOR_ECS
 #include "EditorLayer.h"
+#else
+#include "EditorLayerECS.h"
+#endif
 
 namespace Hazel {
 	class Editor : public Application
