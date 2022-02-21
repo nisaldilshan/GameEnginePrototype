@@ -17,7 +17,6 @@ namespace Hazel {
 		virtual void OnImGuiRender() override;
 		void OnEvent(Event& e) override;
 	private:
-		OrthographicCameraController m_CameraController;
 
 		// Temp
 		std::shared_ptr<VertexArray> m_SquareVA;
@@ -26,6 +25,7 @@ namespace Hazel {
 
 		std::shared_ptr<Scene> m_ActiveScene;
 		Entity m_SquareEntity;
+		Entity m_CameraEntity;
 
 		struct ProfileResult
 		{

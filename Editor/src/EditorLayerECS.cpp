@@ -8,7 +8,6 @@ namespace Hazel {
 
 	EditorLayer::EditorLayer()
 		: Layer("EditorLayer")
-		, m_CameraController(1280.0f / 720.0f, true)
 	{}
 
 	void EditorLayer::OnAttach()
@@ -27,6 +26,9 @@ namespace Hazel {
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
 
 		m_SquareEntity = square;
+
+		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
+		m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f,-1.0f, 1.0f));
 	}
 
 	void EditorLayer::OnDetach()
@@ -48,11 +50,7 @@ namespace Hazel {
 				(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
 			{
 				m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-				m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
 			}
-
-			if (m_ViewportFocused)
-				m_CameraController.OnUpdate(ts);
 		}
 
 		// Render
@@ -61,12 +59,12 @@ namespace Hazel {
 		Hazel::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		Hazel::RenderCommand::Clear();
 
-		Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
+		
 
 		// Update scene
 		m_ActiveScene->OnUpdate(ts);
 
-		Renderer2D::EndScene();
+		
 
 		m_Framebuffer->Unbind();
 
@@ -180,7 +178,6 @@ namespace Hazel {
 
 	void EditorLayer::OnEvent(Event& e)
 	{
-		m_CameraController.OnEvent(e);
 	}
 
 }

@@ -16,3 +16,5 @@ BreakBeforeBraces: Allman
 ColumnLimit: 100
 IndentCaseLabels: false
 SpaceBeforeRangeBasedForLoopColon: true
+BreakConstructorInitializers: BeforeComma
+AlwaysBreakTemplateDeclarations: Yes

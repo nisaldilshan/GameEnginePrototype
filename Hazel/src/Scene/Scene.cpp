@@ -1,22 +1,17 @@
-#include <pch.h>
 #include "Scene.h"
+#include <pch.h>
 
 #include "Components.h"
 #include "src/Renderer/Renderer2D.h"
 
 #include <glm/glm.hpp>
 
-namespace Hazel {
+namespace Hazel
+{
 
-	static void DoMath(const glm::mat4& transform)
-	{
+	static void DoMath(const glm::mat4& transform) {}
 
-	}
-
-	static void OnTransformConstruct(entt::registry& registry, entt::entity entity)
-	{
-
-	}
+	static void OnTransformConstruct(entt::registry& registry, entt::entity entity) {}
 
 	Scene::Scene()
 	{
@@ -26,10 +21,8 @@ namespace Hazel {
 
 		m_Registry.on_construct<TransformComponent>().connect<&OnTransformConstruct>();
 
-
 		if (m_Registry.has<TransformComponent>(entity))
 			TransformComponent& transform = m_Registry.get<TransformComponent>(entity);
-
 
 		auto view = m_Registry.view<TransformComponent>();
 		for (auto entity : view)
@@ -40,18 +33,16 @@ namespace Hazel {
 		auto group = m_Registry.group<TransformComponent>(entt::get<MeshComponent>);
 		for (auto entity : group)
 		{
-			auto&[transform, mesh] = group.get<TransformComponent, MeshComponent>(entity);
+			auto& [transform, mesh] = group.get<TransformComponent, MeshComponent>(entity);
 		}
 #endif
 	}
 
-	Scene::~Scene()
-	{
-	}
+	Scene::~Scene() {}
 
 	Entity Scene::CreateEntity(const std::string& name)
 	{
-		Entity entity{ m_Registry.create(), this };
+		Entity entity{m_Registry.create(), this};
 		entity.AddComponent<TransformComponent>();
 		auto& tag = entity.AddComponent<TagComponent>();
 		tag.Tag = name.empty() ? "Entity" : name;
@@ -60,16 +51,39 @@ namespace Hazel {
 
 	void Scene::OnUpdate(Timestep ts)
 	{
-		auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-		for (auto entity : group)
-		{
-			auto& transform = group.get<TransformComponent>(entity);
-			auto& sprite = group.get<SpriteRendererComponent>(entity);
+		// Render sprites
+		Camera* mainCamera = nullptr;
+		glm::mat4* mainCameraTransform = nullptr;
 
-			Renderer2D::DrawQuad(transform, sprite.Color);
+		{
+			auto group = m_Registry.view<CameraComponent, TransformComponent>();
+			for (auto entity : group)
+			{
+				auto& [transform, camera] = group.get<TransformComponent, CameraComponent>(entity);
+				if (camera.Primary)
+				{
+					mainCamera = &camera.Camera;
+					mainCameraTransform = &transform.Transform;
+					break;
+				}
+			}
 		}
 
+		if (mainCamera)
+		{
+			Hazel::Renderer2D::BeginScene(*mainCamera, *mainCameraTransform);
 
+			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+			for (auto entity : group)
+			{
+				auto& transform = group.get<TransformComponent>(entity);
+				auto& sprite = group.get<SpriteRendererComponent>(entity);
+
+				Renderer2D::DrawQuad(transform, sprite.Color);
+			}
+
+			Renderer2D::EndScene();
+		}
 	}
 
-}
+} // namespace Hazel
