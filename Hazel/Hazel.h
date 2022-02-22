@@ -18,6 +18,7 @@
 
 #include "src/Scene/Scene.h"
 #include "src/Scene/Entity.h"
+#include "src/Scene/ScriptableEntity.h"
 #include "src/Scene/Components.h"
 
 // ---Renderer------------------------
