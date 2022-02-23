@@ -19,7 +19,8 @@ target_link_libraries(editor PRIVATE engine)
 add_compile_definitions(EDITOR_ECS)
 add_executable (editor-ecs 
                     src/EditorApp.cpp
-                    src/EditorLayerECS.cpp           
+                    src/EditorLayerECS.cpp    
+                    src/Panels/SceneHierarchyPanel.cpp       
                 )
 target_include_directories(editor-ecs PRIVATE ../Hazel)
 

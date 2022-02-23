@@ -1,0 +1,50 @@
+#include "SceneHierarchyPanel.h"
+#include <src/Scene/Components.h>
+#include <imgui.h>
+
+namespace Hazel
+{
+    SceneHierarchyPanel::SceneHierarchyPanel(const std::shared_ptr<Scene> scene)
+    {
+        SetContext(scene);
+    }
+    
+    void SceneHierarchyPanel::SetContext(const std::shared_ptr<Scene> scene)
+    {
+        m_Context = scene;
+    }
+    
+    void SceneHierarchyPanel::OnImGuiRender()
+    {
+        ImGui::Begin("Scene Hierarchy");
+
+        m_Context->m_Registry.each([&](auto entityID)
+        {
+            Entity entity{entityID, m_Context.get()};
+            DrawEntityNode(entity);
+        });
+
+        ImGui::End();
+    }
+    
+    void SceneHierarchyPanel::DrawEntityNode(Entity entity)
+    {
+        auto& tag = entity.GetComponent<TagComponent>().Tag;
+        ImGuiTreeNodeFlags flags = (m_SelectionContext == entity ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
+        bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, tag.c_str());
+
+        if (ImGui::IsItemClicked())
+        {
+            m_SelectionContext = entity;
+        }
+
+        if (opened)
+        {
+            ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
+			bool opened = ImGui::TreeNodeEx((void*)9817239, flags, tag.c_str());
+			if (opened)
+				ImGui::TreePop();
+			ImGui::TreePop();
+        }
+    }
+}
