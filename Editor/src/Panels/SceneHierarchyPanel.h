@@ -16,7 +16,8 @@ namespace Hazel
         void OnImGuiRender();
     private:
         void DrawEntityNode(Entity entity);
-
+        void DrawComponents(Entity entity);
+        
         std::shared_ptr<Scene> m_Context;
         Entity m_SelectionContext;
 
