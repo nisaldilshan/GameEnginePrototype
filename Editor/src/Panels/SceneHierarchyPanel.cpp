@@ -45,7 +45,7 @@ namespace Hazel
     {
         auto& tag = entity.GetComponent<TagComponent>().Tag;
         ImGuiTreeNodeFlags flags = (m_SelectionContext == entity ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
-        bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, tag.c_str());
+        bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, "%s", tag.c_str());
 
         if (ImGui::IsItemClicked())
         {
@@ -55,7 +55,7 @@ namespace Hazel
         if (opened)
         {
             ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
-			bool opened = ImGui::TreeNodeEx((void*)9817239, flags, tag.c_str());
+			bool opened = ImGui::TreeNodeEx((void*)9817239, flags, "%s", tag.c_str());
 			if (opened)
 				ImGui::TreePop();
 			ImGui::TreePop();
@@ -70,7 +70,8 @@ namespace Hazel
 
             char buffer[256];
             memset(buffer, 0 , sizeof(buffer));
-            strcpy_s(buffer, sizeof(buffer), tag.c_str());
+            assert(tag.size() < sizeof(buffer));
+            strcpy(buffer, tag.c_str());
 
             if (ImGui::InputText("Tag", buffer, sizeof(buffer)))
             {

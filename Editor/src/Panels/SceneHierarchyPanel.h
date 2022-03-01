@@ -2,6 +2,7 @@
 
 #include <src/Core/Log.h>
 #include <src/Scene/Scene.h>
+#include <src/Scene/Entity.h>
 
 namespace Hazel
 {

@@ -1,11 +1,12 @@
 #pragma once
 
-#include "Entity.h"
-
 #include "src/Core/Timestep.h"
+
+#include <entt/entt.hpp>
 
 namespace Hazel {
 
+	class Entity;
 	class Scene
 	{
 	public:
