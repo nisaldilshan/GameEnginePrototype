@@ -28,10 +28,8 @@ namespace Hazel {
 		auto redSquare = m_ActiveScene->CreateEntity("Red Square");
 		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{1.0f, 0.0f, 0.0f, 1.0f});
 
-		m_SquareEntity = greenSquare;
-
-		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
-		m_CameraEntity.AddComponent<CameraComponent>();
+		auto camera = m_ActiveScene->CreateEntity("Camera Entity");
+		camera.AddComponent<CameraComponent>();
 
 		class CameraController : public ScriptableEntity
 		{
@@ -64,7 +62,7 @@ namespace Hazel {
 			}
 		};
 
-		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+		camera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
@@ -177,7 +175,7 @@ namespace Hazel {
 
 		m_SceneHierarchyPanel.OnImGuiRender();
 
-		ImGui::Begin("Settings");
+		ImGui::Begin("Renderer2D Stats");
 
 		auto stats = Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Stats:");
@@ -185,17 +183,6 @@ namespace Hazel {
 		ImGui::Text("Quads: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
-
-		if (m_SquareEntity)
-		{
-			ImGui::Separator();
-			auto& tag = m_SquareEntity.GetComponent<TagComponent>().Tag;
-			ImGui::Text("%s", tag.c_str());
-
-			auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
-			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
-			ImGui::Separator();
-		}
 
 		ImGui::End();
 

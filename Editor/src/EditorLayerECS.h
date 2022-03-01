@@ -25,8 +25,6 @@ namespace Hazel {
 		std::shared_ptr<Framebuffer> m_Framebuffer;
 
 		std::shared_ptr<Scene> m_ActiveScene;
-		Entity m_SquareEntity;
-		Entity m_CameraEntity;
 
 		struct ProfileResult
 		{
