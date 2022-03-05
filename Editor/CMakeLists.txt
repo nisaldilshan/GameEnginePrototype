@@ -12,6 +12,15 @@ target_include_directories(editor PRIVATE ../Hazel)
 
 target_link_libraries(editor PRIVATE engine)
 
+set_target_properties(editor PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/bin/Editor/Debug"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin/Editor/Release"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/bin/Editor/RelWithDebInfo"
+    RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_BINARY_DIR}/bin/Editor/MinSizeRel"
+)
+
+
+
 
 ################################
 ############ EDITOR-ECS ############
@@ -28,3 +37,15 @@ target_include_directories(editor-ecs PRIVATE ../Hazel)
 #message("-- MSVC_RUNTIME_LIBRARY - sandbox = MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 target_link_libraries(editor-ecs PRIVATE engine)
+
+set_target_properties(editor-ecs PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/bin/EditorECS/Debug"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin/EditorECS/Release"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/bin/EditorECS/RelWithDebInfo"
+    RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_BINARY_DIR}/bin/EditorECS/MinSizeRel"
+)
+
+get_target_property(EDITOR_ECS_SOURCE_DIR editor-ecs SOURCE_DIR)
+add_custom_command(TARGET editor-ecs POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                       ${EDITOR_ECS_SOURCE_DIR}/assets $<TARGET_FILE_DIR:editor-ecs>/assets)

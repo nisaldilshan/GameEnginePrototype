@@ -23,6 +23,7 @@ else()
     message("-- CMAKE_BUILD_TYPE=" "${CMAKE_BUILD_TYPE}")
 endif()
 
+message(STATUS "CMake Source Dir " + ${CMAKE_SOURCE_DIR})
 message(STATUS "CMake Binary Dir " + ${CMAKE_BINARY_DIR})
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
@@ -86,20 +87,7 @@ else()
     target_compile_definitions(engine PRIVATE HZ_RELEASE)
 endif()
 
-################################
-########## SANDBOX APP #########
-################################
-add_executable (sandbox 
-                    Sandbox/src/ParticleSystem.cpp
-                    Sandbox/src/SandboxApp.cpp
-                    Sandbox/src/Sandbox2D.cpp           
-                )
-target_include_directories(sandbox PRIVATE Hazel)
 
-#set_property(TARGET sandbox PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-#message("-- MSVC_RUNTIME_LIBRARY - sandbox = MultiThreaded$<$<CONFIG:Debug>:Debug>")
-
-target_link_libraries(sandbox PRIVATE engine)
-
+add_subdirectory(Sandbox)
 
 add_subdirectory(Editor)
