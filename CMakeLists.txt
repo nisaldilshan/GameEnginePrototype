@@ -57,6 +57,7 @@ add_library (engine
                 Hazel/src/Scene/Scene.cpp
                 Hazel/src/Scene/Entity.cpp
                 Hazel/src/Scene/SceneCamera.cpp
+                Hazel/src/Scene/SceneSerializer.cpp
                 Hazel/src/Platform/Windows/WindowsWindow.cpp
                 Hazel/src/Platform/Windows/WindowsInput.cpp
                 Hazel/src/Platform/Linux/LinuxWindow.cpp
