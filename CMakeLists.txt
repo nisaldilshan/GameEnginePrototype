@@ -60,6 +60,7 @@ add_library (engine
                 Hazel/src/Scene/SceneSerializer.cpp
                 Hazel/src/Platform/Windows/WindowsWindow.cpp
                 Hazel/src/Platform/Windows/WindowsInput.cpp
+                Hazel/src/Platform/Windows/WindowsPlatformUtils.cpp
                 Hazel/src/Platform/Linux/LinuxWindow.cpp
                 Hazel/src/Platform/OpenGL/OpenGLContext.cpp
                 Hazel/src/Platform/OpenGL/OpenGLContext.cpp
