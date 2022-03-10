@@ -26,6 +26,7 @@ jobs:
       shell: bash
       run: cd ThirdParty/imgui-docking-conan &&
           pip install conan && conan export . nisaldilshan/docking &&
+          cd ../.. && cd ThirdParty/cherno-ImGuizmo-conan && conan export . nisaldilshan/latest &&
           cd ../.. && mkdir build && cd build &&
           conan install .. -s build_type=$BUILD_TYPE --build=missing
 

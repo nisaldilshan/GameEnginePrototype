@@ -28,6 +28,11 @@ message(STATUS "CMake Binary Dir " + ${CMAKE_BINARY_DIR})
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
+#### Third Party Libs which are not already built ####
+add_library(third-party 
+                Hazel/src/ImGui/ImGuiBuild.cpp
+                Hazel/src/ImGui/ImGuizmoBuild.cpp)
+
 add_compile_definitions(BATCHING_ENABLED)
 
 #### ENGINE ###
@@ -38,7 +43,6 @@ add_library (engine
                 Hazel/src/Core/Layer.cpp
                 Hazel/src/Core/LayerStack.cpp
                 Hazel/src/ImGui/ImGuiLayer.cpp
-                Hazel/src/ImGui/ImGuiBuild.cpp
                 Hazel/src/StbImage/stb_image.cpp
                 Hazel/src/Renderer/Shader.cpp
                 Hazel/src/Renderer/Renderer.cpp
@@ -73,7 +77,7 @@ add_library (engine
             )
 find_package (OpenGL REQUIRED)
 target_include_directories(engine PRIVATE Hazel)
-target_link_libraries(engine PRIVATE ${CONAN_LIBS})
+target_link_libraries(engine PRIVATE third-party ${CONAN_LIBS})
 if (WIN32)
     #target_compile_definitions(engine PRIVATE HZ_BUILD_DLL)
     target_compile_definitions(engine PRIVATE GLFW_INCLUDE_NONE) #tell glfw to stop include opengl headers
