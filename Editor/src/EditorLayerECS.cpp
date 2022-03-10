@@ -6,6 +6,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <ImGuizmo.h>
+
 namespace Hazel {
 
 	EditorLayer::EditorLayer()
@@ -215,7 +217,50 @@ namespace Hazel {
 		m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
-		ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+		// Gizmos
+		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
+		if (selectedEntity ) //&& m_GizmoType != -1
+		{
+			ImGuizmo::SetOrthographic(false);
+			ImGuizmo::SetDrawlist();
+
+			float windowWidth = (float)ImGui::GetWindowWidth();
+			float windowHeight = (float)ImGui::GetWindowHeight();
+			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth,
+			                  windowHeight);
+
+			// Camera
+			auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
+			const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+			const glm::mat4& cameraProjection = camera.GetProjection();
+			glm::mat4 cameraView =
+			    glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+
+			// Entity transform
+			auto& tc = selectedEntity.GetComponent<TransformComponent>();
+			glm::mat4 transform = tc.GetTransform();
+
+			// // Snapping
+			// bool snap = Input::IsKeyPressed(Key::LeftControl);
+			// float snapValue = 0.5f; // Snap to 0.5m for translation/scale
+			// // Snap to 45 degrees for rotation
+			// if (m_GizmoType == ImGuizmo::OPERATION::ROTATE)
+			// 	snapValue = 45.0f;
+
+			// float snapValues[3] = {snapValue, snapValue, snapValue};
+
+			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
+			                     ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL,
+			                     glm::value_ptr(transform)); // , nullptr, snap ? snapValues : nullptr
+
+			if (ImGuizmo::IsUsing())
+			{
+				tc.Translation = glm::vec3(transform[3]);
+			}
+		}
+
 		ImGui::End();
 		ImGui::PopStyleVar();
 
