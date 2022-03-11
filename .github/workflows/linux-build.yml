@@ -24,13 +24,18 @@ jobs:
         run: sudo apt update && sudo apt upgrade &&
           sudo apt-get install -y build-essential libgtk-3-dev libx11-dev libx11-xcb-dev libfontenc-dev
 
-      - name: Conan
+      - name: Install Conan
         run: pip install conan &&
+          conan profile update settings.compiler.libcxx=libstdc++11 default
+
+      - name: Conan Export Recipe
+        run:
           cd ThirdParty/imgui-docking-conan && conan export . nisaldilshan/docking && cd ../.. &&
           cd ThirdParty/cherno-ImGuizmo-conan && conan export . nisaldilshan/latest && cd ../.. &&
           cd ThirdParty/nativefiledialog-extended-conan && conan export . nisaldilshan/latest && cd ../.. &&
-          mkdir build && cd build &&
-          conan profile update settings.compiler.libcxx=libstdc++11 default &&
+
+      - name: Conan Install Command
+        run: mkdir build && cd build &&
           conan install .. -s build_type=$BUILD_TYPE --build=missing
 
       - name: Configure CMake
