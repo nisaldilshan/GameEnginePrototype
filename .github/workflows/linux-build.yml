@@ -27,7 +27,7 @@ jobs:
       - name: Install Conan
         run: pip install conan &&
           conan profile list &&
-          cat /home/runner/.conan/profiles/default &&
+          cat ~/.conan/profiles/default &&
           conan profile update settings.compiler.libcxx=libstdc++11 /home/runner/.conan/profiles/default
 
       - name: Conan Export Recipe
