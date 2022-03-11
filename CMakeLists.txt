@@ -64,7 +64,6 @@ add_library (engine
                 Hazel/src/Scene/SceneSerializer.cpp
                 Hazel/src/Platform/Windows/WindowsWindow.cpp
                 Hazel/src/Platform/Windows/WindowsInput.cpp
-                Hazel/src/Platform/Windows/WindowsPlatformUtils.cpp
                 Hazel/src/Platform/Linux/LinuxWindow.cpp
                 Hazel/src/Platform/OpenGL/OpenGLContext.cpp
                 Hazel/src/Platform/OpenGL/OpenGLContext.cpp
@@ -75,6 +74,18 @@ add_library (engine
                 Hazel/src/Platform/OpenGL/OpenGLTexture.cpp
                 Hazel/src/Platform/OpenGL/OpenGLFrameBuffer.cpp
             )
+
+# add platform specific sources
+if (WIN32)
+    target_sources(engine PRIVATE 
+                    Hazel/src/Platform/Windows/WindowsPlatformUtils.cpp
+    )
+elseif(UNIX)
+    target_sources(engine PRIVATE 
+                    Hazel/src/Platform/Linux/LinuxPlatformUtils.cpp
+    )
+endif()
+
 find_package (OpenGL REQUIRED)
 target_include_directories(engine PRIVATE Hazel)
 target_link_libraries(engine PRIVATE third-party ${CONAN_LIBS})
