@@ -21,7 +21,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Install Dependencies
-      run: apt-get install libgtk-3-dev -y
+      run: sudo apt-get install -y libgtk-3-dev
     
     - name: Conan
       run: pip install conan &&
