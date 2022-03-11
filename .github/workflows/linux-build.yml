@@ -31,7 +31,7 @@ jobs:
         run:
           cd ThirdParty/imgui-docking-conan && conan export . nisaldilshan/docking && cd ../.. &&
           cd ThirdParty/cherno-ImGuizmo-conan && conan export . nisaldilshan/latest && cd ../.. &&
-          cd ThirdParty/nativefiledialog-extended-conan && conan export . nisaldilshan/latest && cd ../.. &&
+          cd ThirdParty/nativefiledialog-extended-conan && conan export . nisaldilshan/latest && cd ../..
 
       - name: Conan Install Command
         run: mkdir build && cd build &&
