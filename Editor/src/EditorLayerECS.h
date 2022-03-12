@@ -31,13 +31,8 @@ namespace Hazel {
 
 		std::shared_ptr<Scene> m_ActiveScene;
 
-		struct ProfileResult
-		{
-			const char* Name;
-			float Time;
-		};
+		EditorCamera m_EditorCamera;
 
-		std::vector<ProfileResult> m_ProfileResults;
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };

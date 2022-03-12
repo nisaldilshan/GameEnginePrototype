@@ -154,6 +154,18 @@ namespace Hazel {
 #endif
 
 	}
+	
+	void Renderer2D::BeginScene(const EditorCamera& camera)
+	{
+		HZ_PROFILE_FUNCTION();
+		s_Data.TextureShader->Bind();
+		s_Data.TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjection());
+
+#ifdef BATCHING_ENABLED
+		s_Data.QuadIndexCount = 0;
+		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
+#endif
+	}
 
 	void Renderer2D::EndScene()
 	{

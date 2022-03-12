@@ -55,6 +55,7 @@ add_library (engine
                 Hazel/src/Renderer/RendererAPI.cpp
                 Hazel/src/Renderer/GraphicsContext.cpp
                 Hazel/src/Renderer/OrthographicCamera.cpp
+                Hazel/src/Renderer/EditorCamera.cpp
                 Hazel/src/Renderer/OrthographicCameraController.cpp
                 Hazel/src/Renderer/Texture.cpp
                 Hazel/src/Renderer/SubTexture2D.cpp
