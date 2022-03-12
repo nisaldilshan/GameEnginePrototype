@@ -44,6 +44,7 @@ add_library (engine
                 Hazel/src/Core/LayerStack.cpp
                 Hazel/src/ImGui/ImGuiLayer.cpp
                 Hazel/src/StbImage/stb_image.cpp
+                Hazel/src/Math/Math.cpp
                 Hazel/src/Renderer/Shader.cpp
                 Hazel/src/Renderer/Renderer.cpp
                 Hazel/src/Renderer/Buffer.cpp

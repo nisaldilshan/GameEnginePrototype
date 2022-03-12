@@ -1,6 +1,7 @@
 #include "EditorLayerECS.h"
 #include <src/Scene/SceneSerializer.h>
 #include <src/Utils/PlatformUtils.h>
+#include <src/Math/Math.h>
 
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -211,7 +212,7 @@ namespace Hazel {
 
 		m_ViewportFocused = ImGui::IsWindowFocused();
 		m_ViewportHovered = ImGui::IsWindowHovered();
-		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
+		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused && !m_ViewportHovered);
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
@@ -221,7 +222,7 @@ namespace Hazel {
 
 		// Gizmos
 		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
-		if (selectedEntity ) //&& m_GizmoType != -1
+		if (selectedEntity && m_GizmoType != -1)
 		{
 			ImGuizmo::SetOrthographic(false);
 			ImGuizmo::SetDrawlist();
@@ -239,25 +240,33 @@ namespace Hazel {
 			    glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
 
 			// Entity transform
-			auto& tc = selectedEntity.GetComponent<TransformComponent>();
-			glm::mat4 transform = tc.GetTransform();
+			auto& selectedEntityTC = selectedEntity.GetComponent<TransformComponent>();
+			glm::mat4 selectedEntityTransform = selectedEntityTC.GetTransform(); 
+			
 
-			// // Snapping
-			// bool snap = Input::IsKeyPressed(Key::LeftControl);
-			// float snapValue = 0.5f; // Snap to 0.5m for translation/scale
-			// // Snap to 45 degrees for rotation
-			// if (m_GizmoType == ImGuizmo::OPERATION::ROTATE)
-			// 	snapValue = 45.0f;
+			// Snapping
+			bool snap = Input::IsKeyPressed(Key::LeftControl);
+			float snapValue = 0.5f; // Snap to 0.5m for translation/scale
+			// Snap to 45 degrees for rotation
+			if (m_GizmoType == ImGuizmo::OPERATION::ROTATE)
+				snapValue = 45.0f;
 
-			// float snapValues[3] = {snapValue, snapValue, snapValue};
+			float snapValues[3] = {snapValue, snapValue, snapValue};
 
 			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
-			                     ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL,
-			                     glm::value_ptr(transform)); // , nullptr, snap ? snapValues : nullptr
+			                     (ImGuizmo::OPERATION)m_GizmoType, ImGuizmo::LOCAL,
+			                     glm::value_ptr(selectedEntityTransform), nullptr, snap ? snapValues : nullptr); 
+			// after above function call, selectedEntityTransform is updated using Gizmos
+			// have to reflect back those changes to TransformComponent of the entity
 
 			if (ImGuizmo::IsUsing())
 			{
-				tc.Translation = glm::vec3(transform[3]);
+				glm::vec3 translation, rotation, scale;
+				Math::DecomposeTransform(selectedEntityTransform, translation, rotation, scale);
+				glm::vec3 deltaRotation = rotation - selectedEntityTC.Rotation;
+				selectedEntityTC.Translation = translation;
+				selectedEntityTC.Rotation += deltaRotation;
+				selectedEntityTC.Scale = scale;
 			}
 		}
 
@@ -302,6 +311,28 @@ namespace Hazel {
 				if (control && shift)
 					SaveSceneAs();
 
+				break;
+			}
+
+			// Gizmo
+			case Key::Q:
+			{
+				m_GizmoType = -1;
+				break;
+			}
+			case Key::W:
+			{
+				m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+				break;
+			}
+			case Key::E:
+			{
+				m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+				break;
+			}
+			case Key::R:
+			{
+				m_GizmoType = ImGuizmo::OPERATION::SCALE;
 				break;
 			}
 		}
