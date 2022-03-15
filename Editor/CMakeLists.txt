@@ -19,6 +19,11 @@ set_target_properties(editor PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_BINARY_DIR}/bin/Editor/MinSizeRel"
 )
 
+get_target_property(EDITOR_SOURCE_DIR editor SOURCE_DIR)
+add_custom_command(TARGET editor POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                       ${EDITOR_SOURCE_DIR}/assets $<TARGET_FILE_DIR:editor>/assets)
+
 
 
 
