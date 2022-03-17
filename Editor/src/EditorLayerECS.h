@@ -31,6 +31,7 @@ namespace Hazel {
 
 		std::shared_ptr<Scene> m_ActiveScene;
 
+		Entity m_HoveredEntity;
 		EditorCamera m_EditorCamera;
 
 
