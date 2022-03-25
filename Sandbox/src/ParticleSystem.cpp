@@ -54,7 +54,7 @@ void ParticleSystem::OnUpdate(Hazel::Timestep ts)
 
 void ParticleSystem::OnRender(Hazel::OrthographicCamera& camera)
 {
-    Hazel::Renderer2D::BeginScene(camera);
+    //Hazel::Renderer2D::BeginScene(camera);
 
 	for (auto& particle : m_ParticlePool)
 	{

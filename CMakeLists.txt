@@ -58,6 +58,7 @@ add_library (engine
                 Hazel/src/Renderer/EditorCamera.cpp
                 Hazel/src/Renderer/OrthographicCameraController.cpp
                 Hazel/src/Renderer/Texture.cpp
+                Hazel/src/Renderer/UniformBuffer.cpp
                 Hazel/src/Renderer/SubTexture2D.cpp
                 Hazel/src/Renderer/FrameBuffer.cpp
                 Hazel/src/Scene/Scene.cpp
@@ -75,6 +76,7 @@ add_library (engine
                 Hazel/src/Platform/OpenGL/OpenGLShader.cpp
                 Hazel/src/Platform/OpenGL/OpenGLTexture.cpp
                 Hazel/src/Platform/OpenGL/OpenGLFrameBuffer.cpp
+                Hazel/src/Platform/OpenGL/OpenGLUniformBuffer.cpp
             )
 
 # add platform specific sources

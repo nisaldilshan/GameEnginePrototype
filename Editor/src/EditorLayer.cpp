@@ -63,7 +63,7 @@ namespace Hazel {
 
 		{
 			HZ_PROFILE_SCOPE("Renderer Draw");
-			Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
+			//Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
 			Hazel::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
 			Hazel::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, m_SquareColor);
 			Hazel::Renderer2D::DrawRotatedQuad({ -1.0f, 0.0f }, { 0.9f, 0.8f }, glm::radians(-45.0f), { 0.8f, 0.2f, 0.3f, 1.0f });
@@ -71,7 +71,7 @@ namespace Hazel {
 			Hazel::Renderer2D::DrawRotatedQuad({ 1.0f, 1.0f, 0.2}, { 0.6f, 0.6f }, glm::radians(-60.0f), m_logoTexture);
 			Hazel::Renderer2D::EndScene();
 
-			Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
+			//Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
 			for (float y = -5.0f; y < 5.0f; y += 0.5f)
 			{
 				for (float x = -5.0f; x < 5.0f; x += 0.5f)
