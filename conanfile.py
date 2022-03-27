@@ -1,7 +1,10 @@
 from conans import ConanFile, CMake
+
+
 class OpenGLTest(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    requires = "spdlog/1.6.1", "glfw/3.3.2", "glad/0.1.33", "glm/0.9.9.8", "stb/20200203", "entt/3.7.1", "imgui/latest@nisaldilshan/docking", "yaml-cpp/0.7.0", "imguizmo/latest@nisaldilshan/latest"
+    requires = ("spdlog/1.6.1", "glfw/3.3.2", "glad/0.1.33", "glm/0.9.9.8", "stb/20200203", "entt/3.7.1",
+                "imgui/latest@nisaldilshan/docking", "yaml-cpp/0.7.0", "imguizmo/latest@nisaldilshan/latest", "shaderc/2021.1", "spirv-cross/cci.20211113")
     generators = "cmake"
     build_policy = "missing"
     default_options = {
@@ -14,7 +17,8 @@ class OpenGLTest(ConanFile):
 
     def requirements(self):
         if self.settings.os == "Linux":
-            self.requires("nativefile-dialog-extended/latest@nisaldilshan/latest")
+            self.requires(
+                "nativefile-dialog-extended/latest@nisaldilshan/latest")
 
     def configure(self):
         if self.settings.compiler == "Visual Studio":
