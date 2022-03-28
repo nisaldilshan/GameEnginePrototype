@@ -2,7 +2,7 @@
 
 #ifdef HZ_PLATFORM_WINDOWS
 
-extern Hazel::Application* Hazel::CreateApplication();
+extern Hazel::Application* Hazel::CreateApplication(ApplicationCommandLineArgs args);
 
 int main(int argc, char** argv)
 {
@@ -10,7 +10,7 @@ int main(int argc, char** argv)
 	HZ_CORE_WARN("Initialized Log!");
 
 	HZ_PROFILE_BEGIN_SESSION("Startup", "HazelProfile-Startup.json");
-	auto app = Hazel::CreateApplication();
+	auto app = Hazel::CreateApplication({ argc, argv });
 	HZ_PROFILE_END_SESSION();
 
 	HZ_PROFILE_BEGIN_SESSION("Runtime", "HazelProfile-Runtime.json");
