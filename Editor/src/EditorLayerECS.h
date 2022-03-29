@@ -2,6 +2,7 @@
 
 #include <Hazel.h>
 #include "Panels/SceneHierarchyPanel.h"
+#include "Panels/ContentBrowserPanel.h"
 
 namespace Hazel {
 
@@ -40,8 +41,10 @@ namespace Hazel {
 		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
 		glm::vec2 m_ViewportBounds[2];
 
-		SceneHierarchyPanel m_SceneHierarchyPanel;
-
 		int m_GizmoType = -1;
+
+		// Panels
+		SceneHierarchyPanel m_SceneHierarchyPanel;
+		ContentBrowserPanel m_ContentBrowserPanel;
 	}; 
 }

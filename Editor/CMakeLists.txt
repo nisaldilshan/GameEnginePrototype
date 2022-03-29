@@ -34,7 +34,8 @@ add_compile_definitions(EDITOR_ECS)
 add_executable (editor-ecs 
                     src/EditorApp.cpp
                     src/EditorLayerECS.cpp    
-                    src/Panels/SceneHierarchyPanel.cpp       
+                    src/Panels/SceneHierarchyPanel.cpp
+                    src/Panels/ContentBrowserPanel.cpp       
                 )
 target_include_directories(editor-ecs PRIVATE ../Hazel)
 
