@@ -8,7 +8,7 @@ namespace Hazel {
 
 	EditorLayer::EditorLayer()
 		: Layer("EditorLayer")
-		, m_CameraController(1280.0f / 720.0f, true)
+		, m_EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f)
 	{}
 
 	void EditorLayer::OnAttach()
@@ -45,11 +45,11 @@ namespace Hazel {
 				(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
 			{
 				m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-				m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
+				m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
 			}
 
 			if (m_ViewportFocused)
-				m_CameraController.OnUpdate(ts);
+				m_EditorCamera.OnUpdate(ts);
 		}
 
 		// Render
@@ -63,7 +63,7 @@ namespace Hazel {
 
 		{
 			HZ_PROFILE_SCOPE("Renderer Draw");
-			//Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
+			Hazel::Renderer2D::BeginScene(m_EditorCamera);
 			Hazel::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
 			Hazel::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, m_SquareColor);
 			Hazel::Renderer2D::DrawRotatedQuad({ -1.0f, 0.0f }, { 0.9f, 0.8f }, glm::radians(-45.0f), { 0.8f, 0.2f, 0.3f, 1.0f });
@@ -71,7 +71,7 @@ namespace Hazel {
 			Hazel::Renderer2D::DrawRotatedQuad({ 1.0f, 1.0f, 0.2}, { 0.6f, 0.6f }, glm::radians(-60.0f), m_logoTexture);
 			Hazel::Renderer2D::EndScene();
 
-			//Hazel::Renderer2D::BeginScene(m_CameraController.GetCamera());
+			Hazel::Renderer2D::BeginScene(m_EditorCamera);
 			for (float y = -5.0f; y < 5.0f; y += 0.5f)
 			{
 				for (float x = -5.0f; x < 5.0f; x += 0.5f)
@@ -180,7 +180,7 @@ namespace Hazel {
 
 	void EditorLayer::OnEvent(Event& e)
 	{
-		m_CameraController.OnEvent(e);
+		m_EditorCamera.OnEvent(e);
 	}
 
 }

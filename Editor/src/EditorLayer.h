@@ -17,7 +17,7 @@ namespace Hazel {
 		virtual void OnImGuiRender() override;
 		void OnEvent(Event& e) override;
 	private:
-		OrthographicCameraController m_CameraController;
+		EditorCamera m_EditorCamera;
 
 		// Temp
 		std::shared_ptr<VertexArray> m_SquareVA;

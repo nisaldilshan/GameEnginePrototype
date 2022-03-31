@@ -55,3 +55,6 @@ get_target_property(EDITOR_ECS_SOURCE_DIR editor-ecs SOURCE_DIR)
 add_custom_command(TARGET editor-ecs POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                        ${EDITOR_ECS_SOURCE_DIR}/assets $<TARGET_FILE_DIR:editor-ecs>/assets)
+add_custom_command(TARGET editor-ecs POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                        ${EDITOR_ECS_SOURCE_DIR}/Resources $<TARGET_FILE_DIR:editor-ecs>/Resources)

@@ -153,19 +153,6 @@ namespace Hazel {
 #endif
 
 	}
-
-// 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
-// 	{
-// 		HZ_PROFILE_FUNCTION();
-// 		s_Data.CameraBuffer.ViewProjection = camera.GetViewProjection();
-// 		s_Data.CameraUniformBuffer->SetData(&s_Data.CameraBuffer, sizeof(Renderer2DData::CameraData));
-
-// #ifdef BATCHING_ENABLED
-// 		s_Data.QuadIndexCount = 0;
-// 		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
-// #endif
-
-// 	}
 	
 	void Renderer2D::BeginScene(const EditorCamera& camera)
 	{
