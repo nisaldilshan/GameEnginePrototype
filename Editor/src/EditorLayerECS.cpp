@@ -4,6 +4,7 @@
 #include <src/Math/Math.h>
 
 #include <imgui.h>
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -13,6 +14,9 @@ namespace Hazel {
 
 	EditorLayer::EditorLayer()
 		: Layer("EditorLayer")
+	{}
+	
+	EditorLayer::~EditorLayer()
 	{}
 
 	void EditorLayer::OnAttach()
@@ -38,47 +42,53 @@ namespace Hazel {
 
 #if 0
 		// Entity
-		auto greenSquare = m_ActiveScene->CreateEntity("Green Square");
-		greenSquare.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
+		auto square = m_ActiveScene->CreateEntity("Green Square");
+		square.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
 
 		auto redSquare = m_ActiveScene->CreateEntity("Red Square");
-		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{1.0f, 0.0f, 0.0f, 1.0f});
+		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
 
-		auto camera = m_ActiveScene->CreateEntity("Camera Entity");
-		camera.AddComponent<CameraComponent>();
+		m_SquareEntity = square;
+
+		m_CameraEntity = m_ActiveScene->CreateEntity("Camera A");
+		m_CameraEntity.AddComponent<CameraComponent>();
+
+		m_SecondCamera = m_ActiveScene->CreateEntity("Camera B");
+		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
+		cc.Primary = false;
 
 		class CameraController : public ScriptableEntity
 		{
 		public:
-			void OnCreate()
+			virtual void OnCreate() override
 			{
-
+				auto& translation = GetComponent<TransformComponent>().Translation;
+				translation.x = rand() % 10 - 5.0f;
 			}
 
-			void OnDestroy()
+			virtual void OnDestroy() override
 			{
-				
 			}
 
-			void OnUpdate(Timestep ts)
+			virtual void OnUpdate(Timestep ts) override
 			{
-				auto& cameraTranslation = GetComponent<TransformComponent>().Translation;
-				float speed = 1.0f;
+				auto& translation = GetComponent<TransformComponent>().Translation;
 
-				if (Input::IsKeyPressed(KeyCode::A))
-					cameraTranslation.x -= speed * ts;
-				if (Input::IsKeyPressed(KeyCode::D))
-					cameraTranslation.x += speed * ts;
+				float speed = 5.0f;
 
-				if (Input::IsKeyPressed(KeyCode::W))
-					cameraTranslation.y += speed * ts;
-				if (Input::IsKeyPressed(KeyCode::S))
-					cameraTranslation.y -= speed * ts;
-
+				if (Input::IsKeyPressed(Key::A))
+					translation.x -= speed * ts;
+				if (Input::IsKeyPressed(Key::D))
+					translation.x += speed * ts;
+				if (Input::IsKeyPressed(Key::W))
+					translation.y += speed * ts;
+				if (Input::IsKeyPressed(Key::S))
+					translation.y -= speed * ts;
 			}
 		};
 
-		camera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 #endif
 
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
@@ -93,21 +103,17 @@ namespace Hazel {
 	{
 		HZ_PROFILE_FUNCTION();
 
-		// Update
+		// Resize
+		if (FramebufferSpecification spec = m_Framebuffer->GetSpecification();
+			m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
+			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
 		{
-			HZ_PROFILE_SCOPE("CameraController::OnUpdate");
-
-			// Resize
-			if (Hazel::FramebufferSpecification spec = m_Framebuffer->GetSpecification();
-				m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
-				(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
-			{
-				m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-				m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
-				m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-			}
+			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 
+		// Update
 		m_EditorCamera.OnUpdate(ts);
 
 		// Render
@@ -130,7 +136,7 @@ namespace Hazel {
 		int mouseX = (int)mx;
 		int mouseY = (int)my;
 
-		if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseX < (int)viewportSize.y)
+		if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
 		{
 			int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
 			m_HoveredEntity = pixelData == -1 ? Entity() : Entity((entt::entity)pixelData, m_ActiveScene.get());
@@ -183,14 +189,15 @@ namespace Hazel {
 		// DockSpace
 		ImGuiIO& io = ImGui::GetIO();
 		ImGuiStyle& style = ImGui::GetStyle();
-		float minWinSize= style.WindowMinSize.x;
+		float minWinSizeX = style.WindowMinSize.x;
 		style.WindowMinSize.x = 370.0f;
 		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 		}
-		style.WindowMinSize.x = minWinSize;
+
+		style.WindowMinSize.x = minWinSizeX;
 
 		if (ImGui::BeginMenuBar())
 		{
@@ -198,8 +205,7 @@ namespace Hazel {
 			{
 				// Disabling fullscreen would allow the window to be moved to the front of other windows, 
 				// which we can't undo at the moment without finer window depth/z control.
-				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
-
+				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);1
 				if (ImGui::MenuItem("New", "Ctrl+N"))
 					NewScene();
 
@@ -236,7 +242,8 @@ namespace Hazel {
 		ImGui::End();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-		ImGui::Begin("Viewport");
+		bool p_open;
+		ImGui::Begin("Viewport",&p_open);
 		auto viewportMinRegion = ImGui::GetWindowContentRegionMin();
 		auto viewportMaxRegion = ImGui::GetWindowContentRegionMax();
 		auto viewportOffset = ImGui::GetWindowPos();
@@ -251,9 +258,9 @@ namespace Hazel {
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
-		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
+		uint64_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
-		
+
 		// Gizmos
 		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
 		if (selectedEntity && m_GizmoType != -1)
@@ -261,11 +268,11 @@ namespace Hazel {
 			ImGuizmo::SetOrthographic(false);
 			ImGuizmo::SetDrawlist();
 
-			ImGuizmo::SetRect(m_ViewportBounds[0].x, m_ViewportBounds[0].y,
-			                  m_ViewportBounds[1].x - m_ViewportBounds[0].x,
-			                  m_ViewportBounds[1].y - m_ViewportBounds[0].y);
+			ImGuizmo::SetRect(m_ViewportBounds[0].x, m_ViewportBounds[0].y, m_ViewportBounds[1].x - m_ViewportBounds[0].x, m_ViewportBounds[1].y - m_ViewportBounds[0].y);
 
-			// Runtime Camera
+			// Camera
+			
+			// Runtime camera from entity
 			// auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
 			// const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
 			// const glm::mat4& cameraProjection = camera.GetProjection();
@@ -279,7 +286,7 @@ namespace Hazel {
 			// Entity transform
 			auto& selectedEntityTC = selectedEntity.GetComponent<TransformComponent>();
 			glm::mat4 selectedEntityTransform = selectedEntityTC.GetTransform(); 
-			
+
 
 			// Snapping
 			bool snap = Input::IsKeyPressed(Key::LeftControl);
@@ -288,11 +295,11 @@ namespace Hazel {
 			if (m_GizmoType == ImGuizmo::OPERATION::ROTATE)
 				snapValue = 45.0f;
 
-			float snapValues[3] = {snapValue, snapValue, snapValue};
+			float snapValues[3] = { snapValue, snapValue, snapValue };
 
 			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
-			                     (ImGuizmo::OPERATION)m_GizmoType, ImGuizmo::LOCAL,
-			                     glm::value_ptr(selectedEntityTransform), nullptr, snap ? snapValues : nullptr); 
+				(ImGuizmo::OPERATION)m_GizmoType, ImGuizmo::LOCAL,
+				glm::value_ptr(selectedEntityTransform), nullptr, snap ? snapValues : nullptr);
 			// after above function call, selectedEntityTransform is updated using Gizmos
 			// have to reflect back those changes to TransformComponent of the entity
 
@@ -354,30 +361,34 @@ namespace Hazel {
 				break;
 			}
 
-			// Gizmo
+			// Gizmos
 			case Key::Q:
 			{
-				m_GizmoType = -1;
+				if (!ImGuizmo::IsUsing())
+					m_GizmoType = -1;
 				break;
 			}
 			case Key::W:
 			{
-				m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+				if (!ImGuizmo::IsUsing())
+					m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
 				break;
 			}
 			case Key::E:
 			{
-				m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+				if (!ImGuizmo::IsUsing())
+					m_GizmoType = ImGuizmo::OPERATION::ROTATE;
 				break;
 			}
 			case Key::R:
 			{
-				m_GizmoType = ImGuizmo::OPERATION::SCALE;
+				if (!ImGuizmo::IsUsing())
+					m_GizmoType = ImGuizmo::OPERATION::SCALE;
 				break;
 			}
 		}
 	}
-	
+
 	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
 	{
 		if (e.GetMouseButton() == Mouse::ButtonLeft)
