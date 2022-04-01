@@ -33,6 +33,7 @@
 
 build/
 .vscode/
+.vs/
 html/
 latex/
 HazelProfile-Runtime.json
