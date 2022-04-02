@@ -26,11 +26,7 @@ namespace Hazel {
 		void OpenScene();
 		void SaveSceneAs();
 
-		// Temp
-		std::shared_ptr<VertexArray> m_SquareVA;
-		std::shared_ptr<Shader> m_FlatColorShader;
 		std::shared_ptr<Framebuffer> m_Framebuffer;
-
 		std::shared_ptr<Scene> m_ActiveScene;
 
 		Entity m_HoveredEntity;
@@ -45,6 +41,6 @@ namespace Hazel {
 
 		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
-		ContentBrowserPanel m_ContentBrowserPanel;
+		std::shared_ptr<ContentBrowserPanel> m_ContentBrowserPanel;
 	}; 
 }

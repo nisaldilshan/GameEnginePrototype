@@ -14,7 +14,9 @@ namespace Hazel {
 
 	EditorLayer::EditorLayer()
 		: Layer("EditorLayer")
-	{}
+	{
+		m_ContentBrowserPanel = std::make_shared<ContentBrowserPanel>();
+	}
 	
 	EditorLayer::~EditorLayer()
 	{}
@@ -223,7 +225,7 @@ namespace Hazel {
 		}
 
 		m_SceneHierarchyPanel.OnImGuiRender();
-		m_ContentBrowserPanel.OnImGuiRender();
+		m_ContentBrowserPanel->OnImGuiRender();
 
 		ImGui::Begin("Stats");
 
