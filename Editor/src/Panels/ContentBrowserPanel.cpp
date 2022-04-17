@@ -50,7 +50,8 @@ namespace Hazel
 
 			if (ImGui::BeginDragDropSource())
 			{
-				const wchar_t* itemPath = (const wchar_t*)relativePath.c_str();
+				const auto itemPathWideString = relativePath.wstring();
+				const wchar_t* itemPath = (const wchar_t*)(itemPathWideString.c_str());
 				ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
 				ImGui::EndDragDropSource();
 			}
