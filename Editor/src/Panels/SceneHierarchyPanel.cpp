@@ -1,5 +1,6 @@
 #include "SceneHierarchyPanel.h"
 #include <src/Scene/Components.h>
+#include "../PathUtil.h"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <imgui.h>
@@ -14,8 +15,6 @@
 
 namespace Hazel
 {
-    extern const std::filesystem::path g_AssetPath;
-
     SceneHierarchyPanel::SceneHierarchyPanel(const std::shared_ptr<Scene> scene)
     {
         SetContext(scene);
@@ -60,8 +59,6 @@ namespace Hazel
         if (m_SelectionContext)
         {
             DrawComponents(m_SelectionContext);
-
-
         }
 
         ImGui::End();
@@ -352,7 +349,7 @@ namespace Hazel
 				            ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 				    {
 					    const wchar_t* path = (const wchar_t*)payload->Data;
-					    std::filesystem::path texturePath = std::filesystem::path(g_AssetPath) / path;
+					    std::filesystem::path texturePath = std::filesystem::path(getAssetPath()) / path;
 					    component.Texture = Texture2D::Create(texturePath.string());
 				    }
 				    ImGui::EndDragDropTarget();

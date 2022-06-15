@@ -1,24 +1,22 @@
 #include "ContentBrowserPanel.h"
+#include "../PathUtil.h"
 
 #include <imgui.h>
 
 namespace Hazel
 {
-    // Once we have projects, change this
-	extern const std::filesystem::path g_AssetPath = "assets";
-
 	ContentBrowserPanel::ContentBrowserPanel()
-		: m_CurrentDirectory(g_AssetPath)
+		: m_CurrentDirectory(getAssetPath())
 	{
-		m_DirectoryIcon = Texture2D::Create("Resources/Icons/ContentBrowser/DirectoryIcon.png");
-		m_FileIcon = Texture2D::Create("Resources/Icons/ContentBrowser/FileIcon.png");
+		auto DirectoryIcon = std::dynamic_pointer_cast<Texture2D>(Texture2D::Create("Resources/Icons/ContentBrowser/DirectoryIcon.png"));
+		auto FileIcon = Texture2D::Create("Resources/Icons/ContentBrowser/FileIcon.png");
 	}
 
 	void ContentBrowserPanel::OnImGuiRender()
 	{
 		ImGui::Begin("Content Browser");
 
-		if (m_CurrentDirectory != std::filesystem::path(g_AssetPath))
+		if (m_CurrentDirectory != std::filesystem::path(getAssetPath()))
 		{
 			if (ImGui::Button("<-"))
 			{
@@ -40,7 +38,7 @@ namespace Hazel
 		for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDirectory))
 		{
 			const auto& path = directoryEntry.path();
-			auto relativePath = std::filesystem::relative(path, g_AssetPath);
+			auto relativePath = std::filesystem::relative(path, getAssetPath());
 			std::string filenameString = relativePath.filename().string();
 			
 			ImGui::PushID(filenameString.c_str());

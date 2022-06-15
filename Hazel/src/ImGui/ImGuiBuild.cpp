@@ -1,4 +1,6 @@
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD
+//#define IMGUI_DISABLE_STB_TRUETYPE_IMPLEMENTATION
+//#define STB_TRUETYPE_IMPLEMENTATION
 #include <imgui.cpp>
 //#include <imgui_demo.cpp>
 #include <imgui_draw.cpp>

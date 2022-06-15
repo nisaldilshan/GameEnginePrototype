@@ -35,7 +35,8 @@ add_executable (editor-ecs
                     src/EditorApp.cpp
                     src/EditorLayerECS.cpp    
                     src/Panels/SceneHierarchyPanel.cpp
-                    src/Panels/ContentBrowserPanel.cpp       
+                    src/Panels/ContentBrowserPanel.cpp
+                    src/PathUtil.cpp       
                 )
 target_include_directories(editor-ecs PRIVATE ../Hazel)
 

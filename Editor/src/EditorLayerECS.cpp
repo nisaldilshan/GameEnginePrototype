@@ -2,6 +2,7 @@
 #include <src/Scene/SceneSerializer.h>
 #include <src/Utils/PlatformUtils.h>
 #include <src/Math/Math.h>
+#include "PathUtil.h"
 
 #include <imgui.h>
 
@@ -12,12 +13,10 @@
 
 namespace Hazel {
 
-	extern const std::filesystem::path g_AssetPath;
-
 	EditorLayer::EditorLayer()
 		: Layer("EditorLayer")
 	{
-		m_ContentBrowserPanel = std::make_shared<ContentBrowserPanel>();
+		
 	}
 	
 	EditorLayer::~EditorLayer()
@@ -26,6 +25,9 @@ namespace Hazel {
 	void EditorLayer::OnAttach()
 	{
 		HZ_PROFILE_FUNCTION();
+
+		// mIconPlay = Texture2D::Create("Resources/Icons/PlayButton.png"); //build\bin\EditorECS\Debug\Resources\Icons\PlayButton.png
+		// mIconStop = Texture2D::Create("Resources/Icons/StopButton.png");
 
 		Hazel::FramebufferSpecification fbSpec;
 		fbSpec.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::Depth };
@@ -227,7 +229,7 @@ namespace Hazel {
 		}
 
 		m_SceneHierarchyPanel.OnImGuiRender();
-		m_ContentBrowserPanel->OnImGuiRender();
+		m_ContentBrowserPanel.OnImGuiRender();
 
 		ImGui::Begin("Stats");
 
@@ -270,7 +272,7 @@ namespace Hazel {
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 			{
 				const wchar_t* path = (const wchar_t*)payload->Data;
-				OpenScene(std::filesystem::path(g_AssetPath) / path);
+				OpenScene(std::filesystem::path(getAssetPath()) / path);
 			}
 			ImGui::EndDragDropTarget();
 		}
@@ -330,6 +332,25 @@ namespace Hazel {
 
 		ImGui::End();
 		ImGui::PopStyleVar();
+
+		//UI_Toolbar();
+
+		ImGui::End();
+	}
+
+	void EditorLayer::UI_Toolbar()
+	{
+		ImGui::Begin("##toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+
+		auto size = ImGui::GetWindowHeight() - 4.0f;
+		auto icon = (mSceneState == SceneState::Edit) ? mIconPlay : mIconStop;
+		// if (ImGui::ImageButton((ImTextureID)icon->GetRendererID(), ImVec2(size, size)))
+		// {
+		// 	if (mSceneState == SceneState::Edit)
+		// 		OnScenePlay();
+		// 	else if (mSceneState == SceneState::Edit)
+		// 		OnSceneStop();
+		// }
 
 		ImGui::End();
 	}
@@ -446,6 +467,16 @@ namespace Hazel {
 			SceneSerializer serializer(m_ActiveScene);
 			serializer.Serialize(filepath);
 		}
+	}
+
+	void EditorLayer::OnScenePlay() 
+	{ 
+		mSceneState = SceneState::Play;
+	}
+
+	void EditorLayer::OnSceneStop() 
+	{
+		mSceneState = SceneState::Edit;	
 	}
 
 }
