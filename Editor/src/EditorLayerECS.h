@@ -27,6 +27,12 @@ namespace Hazel {
 		void OpenScene(const std::filesystem::path& path);
 		void SaveSceneAs();
 
+		void OnScenePlay();
+		void OnSceneStop();
+
+		// UI Panels
+		void UI_Toolbar();
+
 		std::shared_ptr<Framebuffer> m_Framebuffer;
 		std::shared_ptr<Scene> m_ActiveScene;
 
@@ -40,8 +46,17 @@ namespace Hazel {
 
 		int m_GizmoType = -1;
 
+		enum class SceneState
+		{
+			Edit = 0, Play = 1
+		};
+		SceneState m_SceneState = SceneState::Edit;
+
 		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
 		std::shared_ptr<ContentBrowserPanel> m_ContentBrowserPanel;
+
+		// Editor resources
+		std::shared_ptr<Texture2D> m_IconPlay, m_IconStop;
 	}; 
 }
