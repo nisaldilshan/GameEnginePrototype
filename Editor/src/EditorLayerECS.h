@@ -37,7 +37,7 @@ namespace Hazel {
 		std::shared_ptr<Scene> m_ActiveScene;
 
 		Entity m_HoveredEntity;
-		EditorCamera m_EditorCamera;
+		std::shared_ptr<EditorCamera> m_EditorCamera;
 
 
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
@@ -53,7 +53,7 @@ namespace Hazel {
 		SceneState m_SceneState = SceneState::Edit;
 
 		// Panels
-		SceneHierarchyPanel m_SceneHierarchyPanel;
+		std::shared_ptr<SceneHierarchyPanel> m_SceneHierarchyPanel;
 		std::shared_ptr<ContentBrowserPanel> m_ContentBrowserPanel;
 
 		// Editor resources
