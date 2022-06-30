@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SceneCamera.h"
-#include "ScriptableEntity.h"
+#include "src/Core/UUID.h"
 #include "src/Renderer/Texture.h"
 
 #include <glm/glm.hpp>
@@ -12,6 +12,13 @@
 
 namespace Hazel {
 
+	struct IDComponent
+	{
+		UUID ID;
+
+		IDComponent() = default;
+		IDComponent(const IDComponent&) = default;
+	};
 	struct TagComponent
 	{
 		std::string Tag;
@@ -67,6 +74,7 @@ namespace Hazel {
 		CameraComponent(const CameraComponent&) = default;
 	};
 
+	class ScriptableEntity;
 	struct NativeScriptComponent
 	{
 		ScriptableEntity* Instance = nullptr;

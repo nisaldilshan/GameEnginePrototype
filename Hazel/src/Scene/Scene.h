@@ -1,6 +1,7 @@
 #pragma once
 
 #include "src/Core/Timestep.h"
+#include "src/Core/UUID.h"
 
 #include <entt/entt.hpp>
 
@@ -17,6 +18,7 @@ namespace Hazel {
 		~Scene();
 
 		Entity CreateEntity(const std::string& name = std::string());
+		Entity CreateEntityWithUUID(UUID uuid, const std::string& name = std::string());
 		void DestroyEntity(Entity entity);
 
 		void OnRuntimeStart();

@@ -1,25 +1,24 @@
 Scene: Untitled
 Entities:
-  - Entity: 12837192831273
+  - Entity: 2935443986032967576
     TagComponent:
-      Tag: Floor
+      Tag: Empty Entity
     TransformComponent:
-      Translation: [8.94069672e-08, -1.1041522, 0]
+      Translation: [0, 0, 0]
       Rotation: [0, 0, 0]
-      Scale: [11.6879768, 0.415354162, 1]
-    SpriteRendererComponent:
-      Color: [0.907335877, 0.554970682, 0.0700645521, 1]
-    Rigidbody2DComponent:
-      BodyType: Static
-      FixedRotation: false
-    BoxCollider2DComponent:
-      Offset: [0, 0]
-      Size: [0.5, 0.5]
-      Density: 1
-      Friction: 0.5
-      Restitution: 0
-      RestitutionThreshold: 0.5
-  - Entity: 12837192831273
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
+  - Entity: 1011654169566757599
     TagComponent:
       Tag: Box
     TransformComponent:
@@ -38,21 +37,22 @@ Entities:
       Friction: 0.5
       Restitution: 0
       RestitutionThreshold: 0.5
-  - Entity: 12837192831273
+  - Entity: 12882576201525546855
     TagComponent:
-      Tag: Empty Entity
+      Tag: Floor
     TransformComponent:
-      Translation: [0, 0, 0]
+      Translation: [8.94069672e-08, -1.1041522, 0]
       Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    CameraComponent:
-      Camera:
-        ProjectionType: 1
-        PerspectiveFOV: 0.785398185
-        PerspectiveNear: 0.00999999978
-        PerspectiveFar: 1000
-        OrthographicSize: 10
-        OrthographicNear: -1
-        OrthographicFar: 1
-      Primary: true
-      FixedAspectRatio: false
+      Scale: [11.6879768, 0.415354162, 1]
+    SpriteRendererComponent:
+      Color: [0.907335877, 0.554970682, 0.0700645521, 1]
+    Rigidbody2DComponent:
+      BodyType: Static
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0
+      RestitutionThreshold: 0.5
