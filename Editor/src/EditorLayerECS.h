@@ -25,7 +25,9 @@ namespace Hazel {
 		void NewScene();
 		void OpenScene();
 		void OpenScene(const std::filesystem::path& path);
+		void SaveScene();
 		void SaveSceneAs();
+		void SerializeScene(std::shared_ptr<Scene> scene, const std::filesystem::path& path);
 
 		void OnScenePlay();
 		void OnSceneStop();
@@ -37,7 +39,8 @@ namespace Hazel {
 
 		std::shared_ptr<Framebuffer> m_Framebuffer;
 		std::shared_ptr<Scene> m_ActiveScene;
-		std::shared_ptr<Scene> m_EditorScene, m_RuntimeScene;
+		std::shared_ptr<Scene> m_EditorScene;
+		std::filesystem::path m_EditorScenePath;
 
 		Entity m_HoveredEntity;
 		std::shared_ptr<EditorCamera> m_EditorCamera;
