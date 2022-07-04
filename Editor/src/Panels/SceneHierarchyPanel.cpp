@@ -30,31 +30,33 @@ namespace Hazel
     void SceneHierarchyPanel::OnImGuiRender()
     {
         // Scene Hierarchy Panel
+		ImGui::Begin("Scene Hierarchy");
 
-        ImGui::Begin("Scene Hierarchy");
+		if (m_Context)
+		{
+			m_Context->m_Registry.each(
+			    [&](auto entityID)
+			    {
+				    Entity entity{entityID, m_Context.get()};
+				    DrawEntityNode(entity);
+			    });
 
-        m_Context->m_Registry.each([&](auto entityID)
-        {
-            Entity entity{ entityID, m_Context.get() };
-            DrawEntityNode(entity);
-        });
+			if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+				m_SelectionContext = {};
 
-        if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
-            m_SelectionContext = {};
+			// Right click on blank space
+			if (ImGui::BeginPopupContextWindow(0, 1, false))
+			{
+				if (ImGui::MenuItem("Create Empty Entity"))
+					m_Context->CreateEntity("Empty Entity");
 
-        // Right click on blank space
-        if (ImGui::BeginPopupContextWindow(0, 1, false))
-        {
-            if (ImGui::MenuItem("Create Empty Entity"))
-                m_Context->CreateEntity("Empty Entity");
-
-            ImGui::EndPopup();
-        }
-
+				ImGui::EndPopup();
+			}
+		}
+		
         ImGui::End();
 
-        // Properties Panel
-
+		// Properties Panel
         ImGui::Begin("Properties");
 
         if (m_SelectionContext)
@@ -420,7 +422,7 @@ namespace Hazel
             [](auto& component)
 		{
 			ImGui::DragFloat2("Offset", glm::value_ptr(component.Offset));
-			ImGui::DragFloat2("Size", glm::value_ptr(component.Offset));
+			ImGui::DragFloat2("Size", glm::value_ptr(component.Size));
 			ImGui::DragFloat("Density", &component.Density, 0.01f, 0.0f, 1.0f);
 			ImGui::DragFloat("Friction", &component.Friction, 0.01f, 0.0f, 1.0f);
 			ImGui::DragFloat("Restitution", &component.Restitution, 0.01f, 0.0f, 1.0f);

@@ -30,11 +30,14 @@ namespace Hazel {
 		void OnScenePlay();
 		void OnSceneStop();
 
+		void OnDuplicateEntity();
+
 		// UI Panels
 		void UI_Toolbar();
 
 		std::shared_ptr<Framebuffer> m_Framebuffer;
 		std::shared_ptr<Scene> m_ActiveScene;
+		std::shared_ptr<Scene> m_EditorScene, m_RuntimeScene;
 
 		Entity m_HoveredEntity;
 		std::shared_ptr<EditorCamera> m_EditorCamera;
